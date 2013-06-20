@@ -23,6 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name=".episodes.EpisodesActivity"
+            android:parentActivityName="com.macbury.kontestplayer.episodes.EpisodesActivity">
+            <meta-data
+              android:name="android.support.PARENT_ACTIVITY"
+              android:value="com.macbury.kontestplayer.episodes.EpisodesActivity" />
+        </activity>
     </application>
 
 </manifest>
