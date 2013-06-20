@@ -22,7 +22,7 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
 
   @Override
   public int getTabColor() {
-    return 0xFF96AA39;
+    return 0xFF3F9FE0;
   }
 
   @Override
