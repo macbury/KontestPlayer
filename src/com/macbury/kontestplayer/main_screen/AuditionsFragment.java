@@ -27,7 +27,7 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
 
   @Override
   public String getTabName(Context context) {
-    return "Audycje";//context.getString(R.string.auditions_activity_tab_auditions_list);
+    return "Lista audycji";//context.getString(R.string.auditions_activity_tab_auditions_list);
   }
   
 }
