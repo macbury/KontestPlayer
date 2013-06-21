@@ -35,6 +35,7 @@ public class AuditionsArrayAdapter extends BaseAdapter {
 
   public void setAuditions(ArrayList<Audition> auditions) {
     this.auditions = auditions;
+    notifyDataSetChanged();
   }
 
   @Override
@@ -55,10 +56,10 @@ public class AuditionsArrayAdapter extends BaseAdapter {
     if (convertView == null) {
       holder = new AuditionViewHolder();
       LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-      convertView = inflater.inflate(R.layout.audition_list_view_item, parent, false);
-      holder.imageview = (ImageView) convertView.findViewById(R.id.tb);
-      holder.name = (TextView) convertView.findViewById(R.id.name);
-      holder.meta = (TextView) convertView.findViewById(R.id.meta);
+      convertView             = inflater.inflate(R.layout.audition_list_view_item, parent, false);
+      holder.imageview        = (ImageView) convertView.findViewById(R.id.tb);
+      holder.name             = (TextView) convertView.findViewById(R.id.title);
+      holder.meta             = (TextView) convertView.findViewById(R.id.description);
       convertView.setTag(holder);
     } else {
       holder = (AuditionViewHolder) convertView.getTag();
@@ -67,8 +68,8 @@ public class AuditionsArrayAdapter extends BaseAdapter {
     Audition audition = getItem(position);
     AQuery aq         = query.recycle(convertView);
     
-    aq.id(R.id.name).text(audition.getTitle());
-    aq.id(R.id.meta).text(audition.getSummary());
+    aq.id(R.id.title).text(audition.getTitle());
+    aq.id(R.id.description).text(audition.getSummary());
     //Log.i(TAG, "Setting url:"+audition.getImageUrl());
     aq.id(holder.imageview).image(audition.getImageUrl(), true, true, 0, 0, null, 0, 1.0f);
     return convertView;

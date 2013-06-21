@@ -6,16 +6,16 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name="episode")
-public class Episode {
+public class Episode implements Comparable<Episode> {
   @Element
   private String title;
   @Element
   private String link;
-  @Element
+  @Element(required=false)
   private String description;
   @Element
   private String mp3Url;
-  @Element
+ 
   private Date   pubDate;
   @Element
   private int    id;
@@ -55,5 +55,15 @@ public class Episode {
   }
   public void setId(int id) {
     this.id = id;
+  }
+  @Override
+  public int compareTo(Episode another) {
+    if (this.getId() < another.getId()) {
+      return 1;
+    } else if(this.getId() == another.getId()) {
+      return 0;
+    } else {
+      return -1;
+    }
   }
 }

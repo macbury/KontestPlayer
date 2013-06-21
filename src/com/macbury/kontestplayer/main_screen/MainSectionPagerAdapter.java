@@ -8,16 +8,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.macbury.kontestplayer.about.AboutPageFragment;
+import com.macbury.kontestplayer.episodes.LastEpisodesFragment;
 import com.macbury.kontestplayer.utils.PageTabInterface;
 
 public class MainSectionPagerAdapter extends FragmentPagerAdapter {
-  private AuditionsFragment auditionsFragment;
-  private AboutPageFragment aboutPageFragment;
+  private AuditionsFragment    auditionsFragment;
+  private AboutPageFragment    aboutPageFragment;
+  private LastEpisodesFragment lastEpisodesFragment;
   private Context context;
   public MainSectionPagerAdapter(FragmentManager fm, Context context) {
     super(fm);
-    auditionsFragment = new AuditionsFragment();
-    aboutPageFragment = new AboutPageFragment();
+    auditionsFragment    = new AuditionsFragment();
+    aboutPageFragment    = new AboutPageFragment();
+    lastEpisodesFragment = new LastEpisodesFragment();
   }
   
   @Override
@@ -36,9 +39,11 @@ public class MainSectionPagerAdapter extends FragmentPagerAdapter {
   public Fragment getItem(int index) {
     
     switch (index) {
-      case 1:
-        return aboutPageFragment;
       case 0:
+        return lastEpisodesFragment;
+      case 2:
+        return aboutPageFragment;
+      case 1:
         return auditionsFragment;
 
       default:
@@ -49,7 +54,7 @@ public class MainSectionPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return 2;
+    return 3;
   }
 
 }

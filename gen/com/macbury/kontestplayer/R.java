@@ -173,24 +173,22 @@ containing a value of this type.
     }
     public static final class id {
         public static final int aboutWebView=0x7f090000;
-        public static final int action_settings=0x7f090011;
-        public static final int fab__container=0x7f09000f;
-        public static final int fab__content_top_margin=0x7f090010;
-        public static final int fab__gradient=0x7f09000c;
-        public static final int fab__header_container=0x7f09000b;
-        public static final int fab__listview_background=0x7f09000d;
-        public static final int fab__scroll_view=0x7f09000e;
-        public static final int imageView1=0x7f090008;
-        public static final int image_header=0x7f09000a;
-        public static final int listView1=0x7f090003;
-        public static final int meta=0x7f090007;
-        public static final int name=0x7f090006;
+        public static final int action_settings=0x7f09000f;
+        public static final int description=0x7f090007;
+        public static final int episodesListView=0x7f090003;
+        public static final int fab__container=0x7f09000d;
+        public static final int fab__content_top_margin=0x7f09000e;
+        public static final int fab__gradient=0x7f09000a;
+        public static final int fab__header_container=0x7f090009;
+        public static final int fab__listview_background=0x7f09000b;
+        public static final int fab__scroll_view=0x7f09000c;
+        public static final int image_header=0x7f090008;
         public static final int pager=0x7f090002;
         public static final int progress=0x7f090004;
-        public static final int refresh=0x7f090012;
+        public static final int refresh=0x7f090010;
         public static final int tabs=0x7f090001;
         public static final int tb=0x7f090005;
-        public static final int textView1=0x7f090009;
+        public static final int title=0x7f090006;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;

@@ -1,5 +1,8 @@
 package com.macbury.kontestplayer.auditions;
 
-public class EpisodeViewHolder {
+import android.widget.TextView;
 
+public class EpisodeViewHolder {
+  public TextView name;
+  public TextView description;
 }

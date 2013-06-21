@@ -2,18 +2,25 @@ package com.macbury.kontestplayer.auditions;
 
 import java.util.ArrayList;
 
+import com.androidquery.AQuery;
+import com.macbury.kontestplayer.R;
+
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 public class EpisodesAdapter extends BaseAdapter {
   private ArrayList<Episode> episodes;
   private Context context;
+  private AQuery query;
   
   public EpisodesAdapter(Context context, ArrayList<Episode> episodes) {
     this.context = context;
     this.setEpisodes(episodes);
+    query = new AQuery(context);
   }
   
   @Override
@@ -22,19 +29,38 @@ public class EpisodesAdapter extends BaseAdapter {
   }
 
   @Override
-  public Object getItem(int index) {
+  public Episode getItem(int index) {
     return episodes.get(index);
   }
 
   @Override
-  public long getItemId(int arg0) {
-    // TODO Auto-generated method stub
-    return 0;
+  public long getItemId(int index) {
+    Episode ep = getItem(index);
+    return ep.getId();
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    return null;
+    EpisodeViewHolder holder = null;
+    
+    if (convertView == null) {
+      holder                  = new EpisodeViewHolder();
+      LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+      convertView             = inflater.inflate(R.layout.episode_list_view_item, parent, false);
+      holder.name             = (TextView) convertView.findViewById(R.id.title);
+      holder.description      = (TextView) convertView.findViewById(R.id.description);
+      convertView.setTag(holder);
+    } else {
+      holder = (EpisodeViewHolder)convertView.getTag();
+    }
+    
+    AQuery aq         = query.recycle(convertView);
+    Episode episode   = getItem(position);
+    
+    aq.id(R.id.title).text(episode.getTitle());
+    aq.id(R.id.description).text(episode.getDescription());
+    
+    return convertView;
   }
 
   public ArrayList<Episode> getEpisodes() {
@@ -43,6 +69,7 @@ public class EpisodesAdapter extends BaseAdapter {
 
   public void setEpisodes(ArrayList<Episode> episodes) {
     this.episodes = episodes;
+    notifyDataSetChanged();
   }
 
 }

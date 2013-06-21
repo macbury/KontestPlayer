@@ -27,7 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
-public class AuditionsActivity extends BaseColorActivity implements TabListener, OnPageChangeListener {
+public class AuditionsActivity extends BaseColorActivity implements OnPageChangeListener {
   private static final String TAG = "AuditionsActivity";
   private AQuery query;
   private ViewPager mViewPager;
@@ -38,7 +38,6 @@ public class AuditionsActivity extends BaseColorActivity implements TabListener,
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Log.i(TAG, "Created activity");
-    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     
     setContentView(R.layout.activity_auditions);
     
@@ -49,6 +48,7 @@ public class AuditionsActivity extends BaseColorActivity implements TabListener,
     mViewPager.setAdapter(mSectionsPagerAdapter);
     tabs.setViewPager(mViewPager);
     tabs.setOnPageChangeListener(this);
+    
     changeColor(mSectionsPagerAdapter.getColorForTab(0));
     tabs.setIndicatorColor(mSectionsPagerAdapter.getColorForTab(0));
   }
@@ -75,24 +75,6 @@ public class AuditionsActivity extends BaseColorActivity implements TabListener,
   }
 
   @Override
-  public void onTabReselected(Tab tab, FragmentTransaction ft) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void onTabSelected(Tab tab, FragmentTransaction ft) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
   public void onPageScrollStateChanged(int arg0) {
     // TODO Auto-generated method stub
     
@@ -106,9 +88,10 @@ public class AuditionsActivity extends BaseColorActivity implements TabListener,
 
   @Override
   public void onPageSelected(int index) {
-    //mSectionsPagerAdapter.getItem(index);
+    Log.d(TAG, "Switching to tab: "+index);
     changeColor(mSectionsPagerAdapter.getColorForTab(index));
     tabs.setIndicatorColor(mSectionsPagerAdapter.getColorForTab(index));
+    
   }
 
 }

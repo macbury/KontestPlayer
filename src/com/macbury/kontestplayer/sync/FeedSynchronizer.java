@@ -15,7 +15,9 @@ import com.macbury.kontestplayer.auditions.Episode;
 
 import android.R;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
@@ -25,12 +27,43 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class FeedSynchronizer extends Service {
-  
+  public static final SimpleDateFormat rfc822DateFormats[] = new SimpleDateFormat[] { new SimpleDateFormat("EEE, d MMM yy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm:ss z"), new SimpleDateFormat("d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yyyy HH:mm:ss z"), }; 
   private static final String TAG = "FeedSynchronizer";
   private Stack<Audition> auditions;
   private AQuery query;
   private Audition currentAudition;
-  private static final int SYNC_SERVICE_ID = 345;
+  private static final int SYNC_SERVICE_ID                      = 345;
+  public static final String BROADCAST_ACTION_FINISHED_SYNCING = "com.macbury.kontestplayer.BROADCAST_ACTION_FINISHED_SYNCING";
+  
+  private WifiManager.WifiLock wifilock;
+  static final String WIFILOCK = "OPTION_PERM_WIFILOCK";
+  
+  public void acquireWifiLock(Context ctx) {
+    WifiManager wifiManager = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    releaseWifilock();
+    wifilock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL, WIFILOCK);
+    wifilock.setReferenceCounted(true);
+    wifilock.acquire();
+    Log.d(TAG, "WifiLock " + WIFILOCK + " aquired (FULL_MODE)");
+    Log.d(TAG, "Checking if Wifilock is held:" + wifilock.isHeld()); 
+  }
+  
+  public void releaseWifilock() {
+    Log.d(TAG, "releaseWifilock called");
+    if ((wifilock != null) && (wifilock.isHeld()))
+    {
+      wifilock.release();
+      Log.d(TAG, "Wifilock " + WIFILOCK + " released");
+    }
+  }
+  
+  public boolean holdsWifiLock() {
+    Log.d(TAG, "holdsWifilock called");
+    if (wifilock != null) {
+      return (wifilock.isHeld());
+    }
+    return false;
+  }
   
   @Override
   public void onCreate() {
@@ -38,6 +71,7 @@ public class FeedSynchronizer extends Service {
     query     = new AQuery(this);
     auditions = new Stack<Audition>();
     auditions.addAll(AppDelegate.shared().getAuditionManager().getAuditions());
+    acquireWifiLock(this);
     super.onCreate();
   }
 
@@ -70,6 +104,10 @@ public class FeedSynchronizer extends Service {
       AppDelegate.shared().getAuditionManager().save();
       auditions       = null;
       currentAudition = null;
+      
+      Intent intent = new Intent();
+      intent.setAction(BROADCAST_ACTION_FINISHED_SYNCING);
+      sendBroadcast(intent);
       stopSelf();
     }
   }
@@ -78,33 +116,46 @@ public class FeedSynchronizer extends Service {
   public void onDestroy() {
     Log.i(TAG, "Destroying service");
     super.onDestroy();
+    releaseWifilock();
   }
-
+  
+  private Date parseDate(String text) {
+    for (int i = 0; i < rfc822DateFormats.length; i++) {
+      SimpleDateFormat df = rfc822DateFormats[i];
+      Date d = null;
+      try {
+        d = df.parse(text);
+      } catch (ParseException e) {
+        continue;
+      }
+      if (d != null) {
+        return d;
+      }
+    }
+    
+    return null;
+  }
+  
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
-    if (content != null) {
+    if (content != null && status.getCode() == 200) {
       List<XmlDom> entries = content.tags("item"); 
-      SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
       currentAudition.clearEpisodes();
       for (XmlDom entry : entries) {
-        try {
-          Episode episode = new Episode();
-          episode.setTitle(entry.tag("title").text());
-          episode.setLink(entry.tag("link").text());
-          episode.setDescription(entry.tag("description").text());
-          episode.setPubDate(df.parse(entry.tag("pubDate").text()));
-          episode.setId(Integer.parseInt(entry.tag("guid").text()));
-          
-          XmlDom enclosure = entry.tag("enclosure");
-          if (enclosure != null) {
-            episode.setMp3Url(enclosure.attr("url"));
-            currentAudition.addEpisode(episode);
-          }
-          
-        } catch (ParseException e) {
-          e.printStackTrace();
-          Log.e(TAG, e.toString());
+        Episode episode = new Episode();
+        episode.setTitle(entry.tag("title").text());
+        episode.setLink(entry.tag("link").text());
+        episode.setDescription(entry.tag("description").text());
+        episode.setPubDate(parseDate(entry.tag("pubDate").text()));
+        episode.setId(Integer.parseInt(entry.tag("guid").text()));
+        
+        XmlDom enclosure = entry.tag("enclosure");
+        if (enclosure != null) {
+          episode.setMp3Url(enclosure.attr("url"));
+          currentAudition.addEpisode(episode);
         }
       }
+    } else {
+      Log.i(TAG, "Invalid response");
     }
     
     sync();
@@ -112,7 +163,7 @@ public class FeedSynchronizer extends Service {
   
   private void updateNotification(String contentText, int progress) {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-      .setSmallIcon(R.drawable.stat_sys_download)
+      .setSmallIcon(com.macbury.kontestplayer.R.drawable.ic_launcher_actionbar)
       .setContentTitle("Synchronizacja...");
     builder.setContentText(contentText);
     

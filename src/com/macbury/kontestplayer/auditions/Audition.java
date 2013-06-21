@@ -1,6 +1,7 @@
 package com.macbury.kontestplayer.auditions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -30,12 +31,15 @@ public class Audition {
   public String getSummary() {
     return summary;
   }
+  
   public void setSummary(String summary) {
     this.summary = summary;
   }
+  
   public String getTitle() {
     return title;
   }
+  
   public void setTitle(String title) {
     this.title = title;
   }
@@ -43,21 +47,27 @@ public class Audition {
   public String getFeedUrl() {
     return feedUrl;
   }
+  
   public void setFeedUrl(String feedUrl) {
     this.feedUrl = feedUrl;
   }
+  
   public String getDescription() {
     return description;
   }
+  
   public void setDescription(String description) {
     this.description = description;
   }
+  
   public String getImageUrl() {
     return imageUrl;
   }
+  
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
   }
+  
   public int getId() {
     return id;
   }
@@ -65,6 +75,7 @@ public class Audition {
   public String getColor() {
     return color;
   }
+  
   public void setColor(String color) {
     this.color = color;
   }
@@ -72,8 +83,9 @@ public class Audition {
   public ArrayList<Episode> getEpisodes() {
     if (episodes == null) {
       episodes = new ArrayList<Episode>();
+      
     }
-    
+    //Collections.sort(episodes);
     return episodes;
   }
   
@@ -81,12 +93,17 @@ public class Audition {
     if (episodes == null) {
       episodes = new ArrayList<Episode>();
     }
-    
+    Collections.sort(episodes);
     episodes.add(episode);
   }
+  
   public void clearEpisodes() {
     if (episodes != null) {
       episodes.clear();
     }
+  }
+  
+  public Episode getLatestEpisode() {
+    return episodes.get(0);
   }
 }

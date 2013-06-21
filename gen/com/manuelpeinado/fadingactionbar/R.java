@@ -12,12 +12,12 @@ public final class R {
 		public static final int fab__gradient_light = 0x7f020007;
 	}
 	public static final class id {
-		public static final int fab__container = 0x7f09000f;
-		public static final int fab__content_top_margin = 0x7f090010;
-		public static final int fab__gradient = 0x7f09000c;
-		public static final int fab__header_container = 0x7f09000b;
-		public static final int fab__listview_background = 0x7f09000d;
-		public static final int fab__scroll_view = 0x7f09000e;
+		public static final int fab__container = 0x7f09000d;
+		public static final int fab__content_top_margin = 0x7f09000e;
+		public static final int fab__gradient = 0x7f09000a;
+		public static final int fab__header_container = 0x7f090009;
+		public static final int fab__listview_background = 0x7f09000b;
+		public static final int fab__scroll_view = 0x7f09000c;
 	}
 	public static final class layout {
 		public static final int fab__header_container = 0x7f030006;
