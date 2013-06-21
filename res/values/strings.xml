@@ -5,5 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="auditions_activity_tab_auditions_list">Audycje</string>
+    <string name="refresh">Odśwież</string>
 
 </resources>

@@ -23,7 +23,6 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
     AuditionManager manager = AppDelegate.shared().getAuditionManager();
     auditionsArrayAdapter   = new AuditionsArrayAdapter(this.getActivity().getApplicationContext(), manager.getAuditions());
     setListAdapter(auditionsArrayAdapter);
-    
   }
 
   @Override
@@ -40,6 +39,8 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
   public void onListItemClick(ListView l, View v, int position, long id) {
     Audition audition = auditionsArrayAdapter.getItem(position);
     Intent   intent   = new Intent(getActivity(), EpisodesActivity.class);
+    intent.putExtra(EpisodesActivity.EXTRA_AUDITION, audition.getId());
+    
     startActivity(intent);
   }
 }

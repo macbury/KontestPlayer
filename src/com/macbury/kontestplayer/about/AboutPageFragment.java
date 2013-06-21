@@ -32,6 +32,5 @@ public class AboutPageFragment extends Fragment implements PageTabInterface {
     webView.loadData(Utils.loadTextFromAsset(getResources(), "about.html"), "text/html; charset=UTF-8", null);
     return rootView;
   }
-
   
 }

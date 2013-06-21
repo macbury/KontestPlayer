@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kontestacja>
   <auditions>
-    <audition title="Lewatywa Mózgu" feedUrl="http://www.kontestacja.com/program2.xml" imageUrl="http://www.kontestacja.com/images/autorzy/martin_ironizator.jpg">
+    <audition color="#FF666666" id="2" title="Lewatywa Mózgu" feedUrl="http://www.kontestacja.com/program2.xml" imageUrl="http://www.kontestacja.com/images/autorzy/martin_ironizator.jpg">
         <summary>gdzie przedstawia swój sarkastyczny, ironiczny i wolnościowy komentarz do otaczającej rzeczywistości. W czwartki o 20:00.</summary>
         <description>Pisarz, publicysta, twórca piosenek, bard internetowy. Pisze, śpiewa, filmuje, ironizuje. Jego felietony czytało kilkaset tysięcy, piosenek słuchało kilka milionów. Co pokazuje jak bardzo ludzie się nudzą.
       Oprócz "Raportu Martina" w KonteStacji, prowadzi serwis odwyk.com i publikuje piosenki na Vimeo.
@@ -9,19 +9,19 @@
 
       Słuchaj Raportu Martina na żywo w każdy czwartek o 20:00!</description>
     </audition>
-    <audition title="Wydanie Główne z Hugo" feedUrl="http://www.kontestacja.com/program1.xml" imageUrl="http://www.kontestacja.com/images/programs/240/1.jpg">
+    <audition color="#FF96AA39" id="1" title="Wydanie Główne z Hugo" feedUrl="http://www.kontestacja.com/program1.xml" imageUrl="http://www.kontestacja.com/images/programs/240/1.jpg">
         <summary>od której się wszystko zaczęło. Jest wciąż główną pozycją rozgłośni. Niebanalne tematy i ciekawi goście. W poniedziałki o 21.00</summary>
         <description>Założyciel i właściciel radia KonteStacja. Libertarianin, chrześcijanin i na dodatek kreacjonista. Od ponad dekady, propagator wolności słowa, kreatywnej edukacji i nieszablonowego podejścia do własnego życia. 
 
 Prowadzi audycję na żywo Wydanie Główne od której się wszystko zaczęło. Jest wciąż główną pozycją rozgłośni. Niebanalne tematy i ciekawi goście. W poniedziałki o 21.00</description>
     </audition>
-    <audition title="Jan Fijor zaprasza" feedUrl="www.kontestacja.com/program3.xml" imageUrl="http://www.kontestacja.com/images/programs/240/3.jpg">
+    <audition color="#FFC74B46" id="3" title="Jan Fijor zaprasza" feedUrl="www.kontestacja.com/program3.xml" imageUrl="http://www.kontestacja.com/images/programs/240/3.jpg">
         <summary>w którym przedstawia punkt widzenia przedsiębiorcy. W środy o 21.00</summary>
         <description>Współzałożyciel szkoły biznesu ASBIRO, przedsiębiorca i podróżnik, który w czasie stanu wojennego wyemigrował do Stanów Zjednoczonych, gdzie spędził 17 lat. Były barman, pośrednik nieruchomości, agent ubezpieczeniowy i makler. Obecnie, oprócz działalności w szkole ASBIRO, zajmuje się publicystyką oraz jest właścicielem wydawnictwa Fijorr Publishing. 
 
 Prowadzi audycję na żywo Jan Fijor zaprasza</description>
     </audition>
-    <audition title="AgenTomasz" feedUrl="http://www.kontestacja.com/program18.xml" imageUrl="http://www.kontestacja.com/images/programs/240/18.jpg">
+    <audition color="#FFF4842D" id="18" title="AgenTomasz" feedUrl="http://www.kontestacja.com/program18.xml" imageUrl="http://www.kontestacja.com/images/programs/240/18.jpg">
         <summary>czyli cotygodniowe zestawienie 10 niusów opisujących naszą rzeczywistość, ale w jakiś sposób pominiętych.</summary>
         <description>30 lat, 
 kawaler,
@@ -34,6 +34,26 @@ tu naprawdę nie ma o czym mówić.
 - "Mógłbym prowadzić dwudziestoczterogodzinny komentarz radiowy prosto z garażu wielkiego brata. Udało mi się ujarzmić gadulstwo i zrobić z niego coś co zaczyna przypominać walor". 
 
 Prowadzi audycję pod zaskakującą nazwą AgenTomasz</description>
+    </audition>
+    <audition color="#FFF4842D" id="42" title="Firma na emigracji" feedUrl="http://www.kontestacja.com/program42.xml" imageUrl="http://www.kontestacja.com/images/programs/240/42.jpg">
+        <summary>o tym dlaczego warto emigrować i jak żyje się polakom za granicą.</summary>
+        <description>Maciej Bienert - Dumny ojciec i szczęśliwy mąż, a poza tym pedagog z 11. letnim stażem. Zajmuje się zwykle wieloma rzeczami na raz. Od 3 lat mieszka w Niemczech w raz z rodziną. 
+
+Kiedyś urzędnik. Od 11 lat przedsiębiorca wolnorynkowiec, prowadzący działalność z sukcesami i nierzadko porażkami. 35 lat życia nauczyło go, że warto się uczyć i ciężko pracować, ale przede wszystkim być wiernym wartościom i ideom, które wyznaje. 
+
+W wieku 31 lat zrozumiał, że w życiu nie chodzi o to żeby siebie "odnaleźć" tylko siebie tworzyć. Po ukończeniu wielu szkół, kursów i uczelni, podjął się kolejnego wyzwania: prowadzenia audycji w Kontestacji. </description>
+    </audition>
+    
+    <audition color="#FFF4842D" id="42" title="Bejsment Toks" feedUrl="http://www.kontestacja.com/program44.xml" imageUrl="http://www.kontestacja.com/images/programs/240/44.jpg">
+        <summary>jest przedłużeniem filmów zamieszczanych na kanale http://www.youtube.com/bejsmentoks
+</summary>
+        <description>Gotham City ma swojego Batmana, Smallvile ma Supermana, a Polska ma Jacka W. Zamaskowanego superbohatera bez peleryny, ale z walecznym sercem, który walczy o wolność w tym najbardziej zajebistym kraju na świecie. 
+
+Największym wyzwaniem środowiska wolnościowego w Polsce jest stworzenie "mitu wolności". Tylko wtedy Polacy ją pokochają i zaczną chcieć zmieniać ten kraj. To wielkie wyzwanie. Wyzwanie dla superbohatera! 
+
+Zapraszam najpierw do oglądania, a potem do słuchania:
+Film Bejsment Toks w każdy czwartek.
+Audycja Bejsment Toks PLUS w każdy poniedziałek. </description>
     </audition>
   </auditions>
 </kontestacja>

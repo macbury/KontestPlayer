@@ -1,5 +1,6 @@
 package com.macbury.kontestplayer.auditions;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import org.simpleframework.xml.core.Persister;
 import com.macbury.kontestplayer.R;
 
 import android.content.res.Resources;
+import android.os.Environment;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -58,9 +60,45 @@ public class AuditionManager {
 
   public AuditionManager() {
     Log.i(TAG, "Creating audition manager!");
-    
   }
-
+  
+  public Audition findById(int id) {
+    for (Audition a : auditions) {
+      if (a.getId() == id) {
+        return a;
+      }
+    }
+    return null;
+  }
+  
+  public static String auditionsStoragePath() {
+    return Environment.getExternalStorageDirectory()+"/kontestacja/";
+  }
+  
+  public static void createStorageDirectory() {
+    File cacheDirectory     = new File(auditionsStoragePath());
+    if (!cacheDirectory.exists()) {
+      cacheDirectory.mkdir();
+    }
+  }
+  
+  public String auditionsFilePath() {
+    return AuditionManager.auditionsStoragePath() + "auditions.xml";
+  }
+  
+  public boolean save() {
+    Serializer serializer = new Persister();
+    createStorageDirectory();
+    Log.i(TAG, "Saving auditions in "+auditionsFilePath());
+    try {
+      serializer.write(this, new File(auditionsFilePath()));
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+  
   public void freeMemory() {
     this.auditions = null;
   }

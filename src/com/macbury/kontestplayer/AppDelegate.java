@@ -1,8 +1,10 @@
 package com.macbury.kontestplayer;
 
 import com.macbury.kontestplayer.auditions.AuditionManager;
+import com.macbury.kontestplayer.sync.FeedSynchronizer;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 
 public class AppDelegate extends Application {
@@ -14,7 +16,7 @@ public class AppDelegate extends Application {
     super.onCreate();
     _shared = this;
     Log.i(TAG, "Starting app");
-   
+    sync();
   }
   
   public AuditionManager getAuditionManager() {
@@ -34,5 +36,9 @@ public class AppDelegate extends Application {
 
   public static AppDelegate shared() {
     return _shared;
+  }
+
+  public void sync() {
+    startService(new Intent(this, FeedSynchronizer.class));
   }
 }

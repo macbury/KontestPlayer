@@ -57,7 +57,6 @@ public class AuditionsArrayAdapter extends BaseAdapter {
       LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
       convertView = inflater.inflate(R.layout.audition_list_view_item, parent, false);
       holder.imageview = (ImageView) convertView.findViewById(R.id.tb);
-      holder.progress = (ProgressBar) convertView.findViewById(R.id.progress);
       holder.name = (TextView) convertView.findViewById(R.id.name);
       holder.meta = (TextView) convertView.findViewById(R.id.meta);
       convertView.setTag(holder);
