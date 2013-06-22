@@ -15,7 +15,7 @@ public class Episode implements Comparable<Episode> {
   private String description;
   @Element
   private String mp3Url;
- 
+  @Element
   private Date   pubDate;
   @Element
   private int    id;
@@ -58,12 +58,6 @@ public class Episode implements Comparable<Episode> {
   }
   @Override
   public int compareTo(Episode another) {
-    if (this.getId() < another.getId()) {
-      return 1;
-    } else if(this.getId() == another.getId()) {
-      return 0;
-    } else {
-      return -1;
-    }
+    return another.getPubDate().compareTo(this.getPubDate());
   }
 }

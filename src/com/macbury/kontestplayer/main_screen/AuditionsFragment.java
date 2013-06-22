@@ -5,7 +5,7 @@ import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.AuditionManager;
 import com.macbury.kontestplayer.auditions.AuditionsArrayAdapter;
 import com.macbury.kontestplayer.episodes.EpisodesActivity;
-import com.macbury.kontestplayer.sync.FeedSynchronizer;
+import com.macbury.kontestplayer.services.FeedSynchronizer;
 import com.macbury.kontestplayer.utils.PageTabInterface;
 
 import android.content.BroadcastReceiver;

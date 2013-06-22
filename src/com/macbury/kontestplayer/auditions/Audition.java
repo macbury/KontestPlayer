@@ -83,9 +83,7 @@ public class Audition {
   public ArrayList<Episode> getEpisodes() {
     if (episodes == null) {
       episodes = new ArrayList<Episode>();
-      
     }
-    //Collections.sort(episodes);
     return episodes;
   }
   
@@ -93,7 +91,7 @@ public class Audition {
     if (episodes == null) {
       episodes = new ArrayList<Episode>();
     }
-    Collections.sort(episodes);
+    //Collections.sort(episodes);
     episodes.add(episode);
   }
   
@@ -105,5 +103,14 @@ public class Audition {
   
   public Episode getLatestEpisode() {
     return episodes.get(0);
+  }
+
+  public Episode findEpisode(int id) {
+    for (Episode ep : episodes) {
+      if (ep.getId() == id) {
+        return ep;
+      }
+    }
+    return null;
   }
 }

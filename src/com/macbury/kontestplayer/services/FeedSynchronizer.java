@@ -1,4 +1,4 @@
-package com.macbury.kontestplayer.sync;
+package com.macbury.kontestplayer.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +12,7 @@ import com.androidquery.util.XmlDom;
 import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.Episode;
+import com.macbury.kontestplayer.utils.DateParser;
 
 import android.R;
 import android.app.Service;
@@ -27,7 +28,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class FeedSynchronizer extends Service {
-  public static final SimpleDateFormat rfc822DateFormats[] = new SimpleDateFormat[] { new SimpleDateFormat("EEE, d MMM yy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm:ss z"), new SimpleDateFormat("d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yyyy HH:mm:ss z"), }; 
+  //Thu, 13 Jun 2013 09:55:21 +0000
+  public static final SimpleDateFormat rfc822DateFormats[] = new SimpleDateFormat[] { new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm:ss z"), new SimpleDateFormat("d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yyyy HH:mm:ss z"), }; 
   private static final String TAG = "FeedSynchronizer";
   private Stack<Audition> auditions;
   private AQuery query;
@@ -119,25 +121,9 @@ public class FeedSynchronizer extends Service {
     releaseWifilock();
   }
   
-  private Date parseDate(String text) {
-    for (int i = 0; i < rfc822DateFormats.length; i++) {
-      SimpleDateFormat df = rfc822DateFormats[i];
-      Date d = null;
-      try {
-        d = df.parse(text);
-      } catch (ParseException e) {
-        continue;
-      }
-      if (d != null) {
-        return d;
-      }
-    }
-    
-    return null;
-  }
   
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
-    if (content != null && status.getCode() == 200) {
+    if (content != null) {
       List<XmlDom> entries = content.tags("item"); 
       currentAudition.clearEpisodes();
       for (XmlDom entry : entries) {
@@ -145,7 +131,8 @@ public class FeedSynchronizer extends Service {
         episode.setTitle(entry.tag("title").text());
         episode.setLink(entry.tag("link").text());
         episode.setDescription(entry.tag("description").text());
-        episode.setPubDate(parseDate(entry.tag("pubDate").text()));
+        Date pubDate = DateParser.parseDate(entry.tag("pubDate").text());
+        episode.setPubDate(pubDate);
         episode.setId(Integer.parseInt(entry.tag("guid").text()));
         
         XmlDom enclosure = entry.tag("enclosure");
@@ -155,7 +142,7 @@ public class FeedSynchronizer extends Service {
         }
       }
     } else {
-      Log.i(TAG, "Invalid response");
+      Log.i(TAG, "Invalid response: " + status.getCode());
     }
     
     sync();

@@ -3,7 +3,7 @@ package com.macbury.kontestplayer;
 import com.androidquery.AQuery;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.macbury.kontestplayer.main_screen.MainSectionPagerAdapter;
-import com.macbury.kontestplayer.sync.FeedSynchronizer;
+import com.macbury.kontestplayer.services.FeedSynchronizer;
 import com.macbury.kontestplayer.utils.BaseColorActivity;
 
 import android.os.Bundle;

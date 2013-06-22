@@ -1,11 +1,13 @@
 package com.macbury.kontestplayer.auditions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.androidquery.AQuery;
 import com.macbury.kontestplayer.R;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +61,7 @@ public class EpisodesAdapter extends BaseAdapter {
     
     aq.id(R.id.title).text(episode.getTitle());
     aq.id(R.id.description).text(episode.getDescription());
-    
+    aq.id(R.id.details).text(DateFormat.format("dd, MMMM yyyy ", episode.getPubDate()));
     return convertView;
   }
 
@@ -69,6 +71,9 @@ public class EpisodesAdapter extends BaseAdapter {
 
   public void setEpisodes(ArrayList<Episode> episodes) {
     this.episodes = episodes;
+    if (episodes != null) {
+      Collections.sort(episodes);
+    }
     notifyDataSetChanged();
   }
 

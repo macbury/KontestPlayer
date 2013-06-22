@@ -24,7 +24,6 @@ public abstract class BaseColorActivity extends FragmentActivity {
     
  // change ActionBar color just if an ActionBar is available
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-
       if (oldBackground == null) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -32,9 +31,7 @@ public abstract class BaseColorActivity extends FragmentActivity {
         } else {
           getActionBar().setBackgroundDrawable(ld);
         }
-
       } else {
-
         TransitionDrawable td = new TransitionDrawable(new Drawable[] { oldBackground, ld });
 
         // workaround for broken ActionBarContainer drawable handling on
@@ -52,14 +49,10 @@ public abstract class BaseColorActivity extends FragmentActivity {
 
       oldBackground = ld;
 
-      // http://stackoverflow.com/questions/11002691/actionbar-setbackgrounddrawable-nulling-background-from-thread-handler
-      getActionBar().setDisplayShowTitleEnabled(false);
-      getActionBar().setDisplayShowTitleEnabled(true);
 
     }
 
     currentColor = newColor;
-
     
     actionbar.setDisplayShowTitleEnabled(false);
     actionbar.setDisplayShowTitleEnabled(true);

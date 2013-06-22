@@ -4,49 +4,63 @@
     android:layout_height="wrap_content"
     android:gravity="center" >
 
-<ImageView
-    android:id="@+id/tb"
-    android:layout_width="75dip"
-    android:layout_height="75dip"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="10dp"
-    android:scaleType="centerInside"
-    android:src="@drawable/av_play" />
-        
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignWithParentIfMissing="true"
-      android:layout_marginTop="5dp"
-      android:layout_toRightOf="@id/tb"
-      android:maxLines="2"
-      android:paddingLeft="6dip"
-      android:paddingRight="6dip"
-      android:paddingTop="6dip"
-      android:text="Europe&apos;s Leaders Fear Libya Could Become Next Afghanistan"
-      android:textColor="@color/list_view_text_color"
-      android:textSize="15sp"
-      android:textStyle="bold" />
-  
-  <TextView
-      android:id="@+id/description"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/title"
-      android:layout_marginBottom="10dp"
-      android:layout_marginRight="5dp"
-      android:layout_marginTop="2dip"
-      android:layout_toRightOf="@id/tb"
-      android:ellipsize="none"
-      android:maxLines="3"
-      android:paddingBottom="6dip"
-      android:paddingLeft="6dip"
-      android:singleLine="false"
-      android:text="testowanie very long textu modo fuka i jest sad das  asd as dad ad"
-      android:textColor="@color/list_view_text_color"
-      android:textSize="14sp" />
+    <ImageView
+        android:id="@+id/tb"
+        android:layout_width="40dip"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/av_play" />
+
+    <LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toRightOf="@id/tb"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:paddingTop="6dip"
+            android:text="Europe&apos;s Leaders Fear Libya Could Become Next Afghanistan"
+            android:textColor="@color/list_view_text_color"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="3"
+            android:paddingBottom="6dip"
+            android:paddingLeft="6dip"
+            android:singleLine="false"
+            android:text="12 marca 2013"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:maxLines="3"
+            android:paddingBottom="6dip"
+            android:paddingLeft="6dip"
+            android:singleLine="false"
+            android:text="testowanie very long textu modo fuka i jest sad das  asd as dad ad"
+            android:textColor="@color/list_view_text_color"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

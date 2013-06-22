@@ -31,6 +31,7 @@ public class AuditionManager {
   private ArrayList<Audition> auditions;
 
   public ArrayList<Audition> getAuditions() {
+    
     return auditions;
   }
   

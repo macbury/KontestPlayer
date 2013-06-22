@@ -6,7 +6,8 @@ import com.macbury.kontestplayer.R;
 import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.EpisodesAdapter;
 import com.macbury.kontestplayer.main_screen.AuditionsFragment;
-import com.macbury.kontestplayer.sync.FeedSynchronizer;
+import com.macbury.kontestplayer.player.PlayerActivity;
+import com.macbury.kontestplayer.services.FeedSynchronizer;
 import com.macbury.kontestplayer.utils.BaseColorActivity;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 
@@ -20,10 +21,15 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-public class EpisodesActivity extends BaseColorActivity {
+public class EpisodesActivity extends BaseColorActivity implements OnItemClickListener{
   private static final String TAG = "EpisodesActivity";
   public static final String EXTRA_AUDITION = "EXTRA_AUDITION";
   private AQuery query;
@@ -35,24 +41,21 @@ public class EpisodesActivity extends BaseColorActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     query = new AQuery(this);
+    
     setContentView(R.layout.activity_episodes);
     
-    Intent intent = getIntent();
+    listView = (ListView) findViewById(R.id.episodesListView);
     
+    Intent intent = getIntent();
     if (intent != null) {
       loadAuditionFromBundle(intent.getExtras());
-    } else {
-      changeColor(AuditionsFragment.ACTION_BAR_COLOR);
     }
-    
-    getActionBar().setDisplayHomeAsUpEnabled(true);
-    
-    listView = (ListView) findViewById(R.id.episodesListView);
     
     episodeArrayAdapter = new EpisodesAdapter(this, currentAudition.getEpisodes());
     if (currentAudition.getEpisodes().size() > 0) {
       listView.setAdapter(episodeArrayAdapter);
     }
+    listView.setOnItemClickListener(this);
   }
   
   @Override
@@ -71,6 +74,7 @@ public class EpisodesActivity extends BaseColorActivity {
     currentAudition = AppDelegate.shared().getAuditionManager().findById(savedInstanceState.getInt(EXTRA_AUDITION));
     setTitle(currentAudition.getTitle());
     int c = Color.parseColor(currentAudition.getColor());
+    changeColor(c);
     changeColor(c);
     //query.id(R.id.image_header).image(audition.getImageUrl());
   }
@@ -98,4 +102,14 @@ public class EpisodesActivity extends BaseColorActivity {
     }
     
   };
+
+
+  @Override
+  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+    Intent intent = new Intent(this, PlayerActivity.class);
+    intent.putExtra(PlayerActivity.EPISODE_ID_EXTRA, (int)id);
+    intent.putExtra(PlayerActivity.AUDITION_EXTRA, currentAudition.getId());
+    startActivity(intent);
+  }
+
 }

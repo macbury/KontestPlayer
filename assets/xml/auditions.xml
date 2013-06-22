@@ -15,7 +15,7 @@
 
 Prowadzi audycję na żywo Wydanie Główne od której się wszystko zaczęło. Jest wciąż główną pozycją rozgłośni. Niebanalne tematy i ciekawi goście. W poniedziałki o 21.00</description>
     </audition>
-    <audition color="#FFC74B46" id="3" title="Jan Fijor zaprasza" feedUrl="www.kontestacja.com/program3.xml" imageUrl="http://www.kontestacja.com/images/programs/240/3.jpg">
+    <audition color="#FFC74B46" id="3" title="Jan Fijor zaprasza" feedUrl="http://www.kontestacja.com/program3.xml" imageUrl="http://www.kontestacja.com/images/programs/240/3.jpg">
         <summary>w którym przedstawia punkt widzenia przedsiębiorcy. W środy o 21.00</summary>
         <description>Współzałożyciel szkoły biznesu ASBIRO, przedsiębiorca i podróżnik, który w czasie stanu wojennego wyemigrował do Stanów Zjednoczonych, gdzie spędził 17 lat. Były barman, pośrednik nieruchomości, agent ubezpieczeniowy i makler. Obecnie, oprócz działalności w szkole ASBIRO, zajmuje się publicystyką oraz jest właścicielem wydawnictwa Fijorr Publishing. 
 
@@ -44,7 +44,7 @@ Kiedyś urzędnik. Od 11 lat przedsiębiorca wolnorynkowiec, prowadzący działa
 W wieku 31 lat zrozumiał, że w życiu nie chodzi o to żeby siebie "odnaleźć" tylko siebie tworzyć. Po ukończeniu wielu szkół, kursów i uczelni, podjął się kolejnego wyzwania: prowadzenia audycji w Kontestacji. </description>
     </audition>
     
-    <audition color="#FFF4842D" id="42" title="Bejsment Toks" feedUrl="http://www.kontestacja.com/program44.xml" imageUrl="http://www.kontestacja.com/images/programs/240/44.jpg">
+    <audition color="#FFF4842D" id="44" title="Bejsment Toks" feedUrl="http://www.kontestacja.com/program44.xml" imageUrl="http://www.kontestacja.com/images/programs/240/44.jpg">
         <summary>jest przedłużeniem filmów zamieszczanych na kanale http://www.youtube.com/bejsmentoks
 </summary>
         <description>Gotham City ma swojego Batmana, Smallvile ma Supermana, a Polska ma Jacka W. Zamaskowanego superbohatera bez peleryny, ale z walecznym sercem, który walczy o wolność w tym najbardziej zajebistym kraju na świecie. 
