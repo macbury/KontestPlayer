@@ -38,6 +38,7 @@
             <intent-filter android:name="com.macbury.kontestplayer.recivers.START_SYNC_ACTION"></intent-filter>
         </receiver>
         <activity android:name=".player.PlayerActivity"></activity>
+        <service android:name="com.macbury.kontestplayer.services.PlayerService"></service>
     </application>
 
 </manifest>
