@@ -225,14 +225,13 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
   }
   
   private BroadcastReceiver mUpdateBroadcast = new BroadcastReceiver() {
-
     @Override
     public void onReceive(Context context, Intent intent) {
       if (mediaPlayer != null)
         updateNotification();
     }
-    
   };
+  
   public MediaPlayer getMediaPlayer() {
     return mediaPlayer;
   }

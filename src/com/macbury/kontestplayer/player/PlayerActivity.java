@@ -49,6 +49,7 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   private ServiceConnection mConnection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName className, IBinder service) {
+      Log.i(TAG, "Binding to service");
       mBound             = true;
       LocalBinder binder = (LocalBinder)service;
       playService        = binder.getService();
@@ -57,6 +58,7 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
 
     @Override
     public void onServiceDisconnected(ComponentName arg0) {
+      Log.i(TAG, "Unbinding from service");
       mBound      = false;
       playService = null;
       updateGUIFromService();
@@ -107,7 +109,11 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   @Override
   protected void onStart() {
     super.onStart();
+    Log.i(TAG, "Registering update service");
     registerReceiver(mUpdateReciver, new IntentFilter(PlayerService.ACTION_UPDATE_PLAYBACK_INFO));
+    if (!mBound) {
+      startPlayerService();
+    }
   }
 
   @Override
@@ -124,7 +130,6 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     }
     
     unregisterReceiver(mUpdateReciver);
-    playService = null;
   }
 
   private void startPlayerService() {
