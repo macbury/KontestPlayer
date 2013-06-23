@@ -9,6 +9,10 @@ import android.util.Log;
 public class Utils {
   private static final String TAG = "Utils";
 
+  public static String formatDurationToString(int s) {
+    return String.format("%d:%02d:%02d", s/3600, (s%3600)/60, (s%60));
+  }
+  
   public static String loadTextFromAsset(Resources res, String path) {
     byte[] byteString  = null;
     InputStream stream = null;

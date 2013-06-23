@@ -8,6 +8,7 @@ import com.macbury.kontestplayer.auditions.EpisodesAdapter;
 import com.macbury.kontestplayer.main_screen.AuditionsFragment;
 import com.macbury.kontestplayer.player.PlayerActivity;
 import com.macbury.kontestplayer.services.FeedSynchronizer;
+import com.macbury.kontestplayer.services.PlayerService;
 import com.macbury.kontestplayer.utils.BaseColorActivity;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 
@@ -43,7 +44,7 @@ public class EpisodesActivity extends BaseColorActivity implements OnItemClickLi
     query = new AQuery(this);
     
     setContentView(R.layout.activity_episodes);
-    
+    getActionBar().setDisplayHomeAsUpEnabled(true);
     listView = (ListView) findViewById(R.id.episodesListView);
     
     Intent intent = getIntent();

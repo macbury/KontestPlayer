@@ -52,7 +52,7 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
     Audition audition = auditionsArrayAdapter.getItem(position);
     Intent   intent   = new Intent(getActivity(), EpisodesActivity.class);
     intent.putExtra(EpisodesActivity.EXTRA_AUDITION, audition.getId());
-    
+    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
     startActivity(intent);
   }
   

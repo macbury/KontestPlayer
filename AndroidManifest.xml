@@ -28,7 +28,11 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".episodes.EpisodesActivity">
+            android:name=".episodes.EpisodesActivity" 
+            android:parentActivityName=".AuditionsActivity">
+            <meta-data
+              android:name="android.support.PARENT_ACTIVITY"
+              android:value=".AuditionsActivity" />
         </activity>
         <service android:name="com.macbury.kontestplayer.services.FeedSynchronizer"></service>
         <receiver android:name="com.macbury.kontestplayer.recivers.BootReceiver" android:exported="false">
@@ -37,7 +41,11 @@
         <receiver android:name=".recivers.StartSyncReceiver">
             <intent-filter android:name="com.macbury.kontestplayer.recivers.START_SYNC_ACTION"></intent-filter>
         </receiver>
-        <activity android:name=".player.PlayerActivity"></activity>
+        <activity android:name=".player.PlayerActivity"
+                  android:parentActivityName=".AuditionsActivity">
+            <meta-data
+              android:name="android.support.PARENT_ACTIVITY"
+              android:value=".AuditionsActivity" /></activity>
         <service android:name="com.macbury.kontestplayer.services.PlayerService"></service>
     </application>
 

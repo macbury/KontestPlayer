@@ -29,11 +29,12 @@ import android.view.Window;
 
 public class AuditionsActivity extends BaseColorActivity implements OnPageChangeListener {
   private static final String TAG = "AuditionsActivity";
+  private static final String BUNDLE_SAVE_INSTANCE_TAB = "BUNDLE_SAVE_INSTANCE_TAB";
   private AQuery query;
   private ViewPager mViewPager;
   private MainSectionPagerAdapter mSectionsPagerAdapter;
   private PagerSlidingTabStrip tabs;
-  
+  private int currentPageIndex = 0;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,13 +52,42 @@ public class AuditionsActivity extends BaseColorActivity implements OnPageChange
     
     changeColor(mSectionsPagerAdapter.getColorForTab(0));
     tabs.setIndicatorColor(mSectionsPagerAdapter.getColorForTab(0));
+    
+    loadGUIFromBundle(savedInstanceState);
   }
   
+  private void loadGUIFromBundle(Bundle savedInstanceState) {
+    if (savedInstanceState != null) {
+      currentPageIndex = savedInstanceState.getInt(BUNDLE_SAVE_INSTANCE_TAB);
+      mViewPager.setCurrentItem(currentPageIndex);
+    }
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    loadGUIFromBundle(savedInstanceState);
+  }
+  
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putInt(BUNDLE_SAVE_INSTANCE_TAB, currentPageIndex);
+  }
+
   @Override
   protected void onStart() {
     super.onStart();
   }
   
+  
+  
+  @Override
+  protected void onStop() {
+    // TODO Auto-generated method stub
+    super.onStop();
+  }
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.auditions, menu);
@@ -91,7 +121,7 @@ public class AuditionsActivity extends BaseColorActivity implements OnPageChange
     Log.d(TAG, "Switching to tab: "+index);
     changeColor(mSectionsPagerAdapter.getColorForTab(index));
     tabs.setIndicatorColor(mSectionsPagerAdapter.getColorForTab(index));
-    
+    currentPageIndex = index;
   }
 
 }
