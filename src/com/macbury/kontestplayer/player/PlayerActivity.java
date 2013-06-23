@@ -56,7 +56,7 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   private ServiceConnection mConnection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName className, IBinder service) {
-      Log.i(TAG, "Binding to service");
+      Log.d(TAG, "Binding to service");
       mBound             = true;
       LocalBinder binder = (LocalBinder)service;
       playService        = binder.getService();
@@ -65,7 +65,7 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
 
     @Override
     public void onServiceDisconnected(ComponentName arg0) {
-      Log.i(TAG, "Unbinding from service");
+      Log.d(TAG, "Unbinding from service");
       mBound      = false;
       playService = null;
       updateGUIFromService();
@@ -187,7 +187,9 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     } else {
       MediaPlayer mp = playService.getMediaPlayer();
       
-      if(mp.isPlaying()) {
+      if (mp == null) {
+        startPlayerService();
+      } else if(mp.isPlaying()) {
         mp.pause();
       } else {
         mp.start();
@@ -201,7 +203,11 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     if (playService != null) {
       MediaPlayer mp = playService.getMediaPlayer();
       
-      if (playService.isPrepared()) {
+      if (mp == null || !playService.isPrepared()) {
+        durationSeekBar.setEnabled(false);
+        bufferingProgressBar.setIndeterminate(true);
+        playPauseButton.setImageResource(R.drawable.av_play);
+      } else {
         durationSeekBar.setMax(mp.getDuration());
         if (!mSeekStart) {
           durationSeekBar.setProgress(mp.getCurrentPosition());
@@ -211,21 +217,18 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
         bufferingProgressBar.setIndeterminate(false);
         bufferingProgressBar.setMax(100);
         bufferingProgressBar.setProgress(playService.getBufferProgress());
-      } else {
-        durationSeekBar.setEnabled(false);
-        bufferingProgressBar.setIndeterminate(true);
-      }
-      
-      if(mp.isPlaying()) {
-        playPauseButton.setImageResource(R.drawable.av_pause);
-      } else {
-        playPauseButton.setImageResource(R.drawable.av_play);
+        
+        if(mp.isPlaying()) {
+          playPauseButton.setImageResource(R.drawable.av_pause);
+        } else {
+          playPauseButton.setImageResource(R.drawable.av_play);
+        }
       }
     } else {
       durationSeekBar.setEnabled(false);
+      bufferingProgressBar.setIndeterminate(true);
       playPauseButton.setImageResource(R.drawable.av_play);
     }
-    
   }
   
   private BroadcastReceiver mUpdateReciver = new BroadcastReceiver() {
@@ -238,9 +241,13 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   private BroadcastReceiver mFinishServiceReciver = new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
+      Log.d(TAG, "Recived finish service callback broadcast");
       if(mBound) {
         unbindService(mConnection);
       }
+      mBound      = false;
+      playService = null;
+      updateGUIFromService();
     }
   };
 

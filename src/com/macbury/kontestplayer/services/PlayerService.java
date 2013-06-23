@@ -106,7 +106,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
     startForeground(NOTIFICATION_ID, builder.build());
   }
   
-  private void createMediaPlayer() {
+  public void createMediaPlayer() {
     if (mediaPlayer != null) {
       mediaPlayer.release();
     }

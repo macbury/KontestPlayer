@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.androidquery.util.XmlDom;
 import com.macbury.kontestplayer.AppDelegate;
@@ -104,7 +105,11 @@ public class FeedSynchronizer extends Service {
       currentAudition = auditions.pop();
       updateNotification(currentAudition.getTitle(), 0);
       Log.i(TAG, "Next to sync: "+ currentAudition.getTitle() + " " + currentAudition.getFeedUrl());
-      query.ajax(currentAudition.getFeedUrl(), XmlDom.class, this, "onFeedFetchComplete");
+      
+      AjaxCallback<XmlDom> cb = new AjaxCallback<XmlDom>();
+      cb.url(currentAudition.getFeedUrl()).type(XmlDom.class).timeout(10).handler(this, "onFeedFetchComplete");  
+      
+      query.ajax(cb);
     } else {
       Log.i(TAG, "Finished syncing");
       auditions       = null;
@@ -126,6 +131,7 @@ public class FeedSynchronizer extends Service {
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
     if (content == null) {
       Log.i(TAG, "Invalid response: "+status.getCode());
+      sync();
     } else {
       new DownloadFilesTask().execute(content);
     }
