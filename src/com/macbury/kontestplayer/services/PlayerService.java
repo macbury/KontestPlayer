@@ -39,7 +39,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
   private Episode currentEpisode;
   private SleepTimer sleepTimer;
   private Thread sleepThread;
-  
+  private int bufferProgress                                = 0;
   private boolean isPrepared;
   static final String WIFILOCK                              = "OPTION_PERM_WIFILOCK";
   public static final String EXTRA_URL                      = "EXTRA_URL";
@@ -50,6 +50,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
   public static final String ACTION_START                   = "ACTION_START";
   public static final String ACTION_STOP                    = "ACTION_STOP";
   public static final String ACTION_UPDATE_PLAYBACK_INFO    = "com.macbury.kontestplayer.ACTION_UPDATE_PLAYBACK_INFO";
+  public static final String ACTION_FINISH_SERVICE          = "com.macbury.kontestplayer.ACTION_FINISH_SERVICE";
   public static final String EXTRA_ACTION_PLAY              = "EXTRA_ACTION_PLAY";
   public static final String EXTRA_ACTION_PAUSE             = "EXTRA_ACTION_PAUSE";
   @Override
@@ -173,8 +174,8 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
     mediaPlayer.start();
     Log.d(TAG, "Media is ready!");
     Log.d(TAG, "Duration of file is " + mediaPlayer.getDuration());
-    
-    isPrepared = true;
+    bufferProgress  = 0;
+    isPrepared      = true;
   }
 
   @Override
@@ -221,7 +222,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
 
   @Override
   public void onBufferingUpdate(MediaPlayer mediaPlayer, int percent) {
-    
+    bufferProgress = percent;
   }
   
   private BroadcastReceiver mUpdateBroadcast = new BroadcastReceiver() {
@@ -253,8 +254,56 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
 
   @Override
   public boolean onError(MediaPlayer arg0, int what, int extra) {
-    //Toast.makeText(this, "B³¹d: "+what, Toast.LENGTH_LONG);
+    if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
+      Toast.makeText(this, "B³¹d po³¹czenie zerwane z serwerem", Toast.LENGTH_LONG).show();
+    } else {
+      
+      switch (extra) {
+        case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
+          Toast.makeText(this, "Serwer nie odpowiada", Toast.LENGTH_LONG).show();
+          finish();
+        break;
+        
+        case MediaPlayer.MEDIA_ERROR_IO:
+          Toast.makeText(this, "Problem z po³¹czeniem", Toast.LENGTH_LONG).show();
+          finish();
+        break;
+          
+        case MediaPlayer.MEDIA_ERROR_UNSUPPORTED: 
+          Toast.makeText(this, "Nie obs³ugiwany strumieñ", Toast.LENGTH_LONG).show();
+          finish();
+        break;
+        
+        case MediaPlayer.MEDIA_ERROR_MALFORMED: 
+          Toast.makeText(this, "Bitstream is not conforming to the related coding standard or file spec. ", Toast.LENGTH_LONG).show();
+          finish();
+        break;
+        
+        default:
+          //Toast.makeText(this, "Nie mo¿na odtworzyæ pliku: " + extra, Toast.LENGTH_LONG).show();
+        break;
+      }
+      
+    }
+    
+    Log.e(TAG, "Error: "+ what);
+    
+    //
     //stopSelf();
-    return true;
+    return false;
+  }
+
+  private void finish() {
+    sendBroadcast(new Intent(ACTION_FINISH_SERVICE));
+    mediaPlayer.stop();
+    stopSelf();
+  }
+
+  public boolean isPrepared() {
+    return isPrepared;
+  }
+  
+  public int getBufferProgress() {
+    return bufferProgress;
   }
 }

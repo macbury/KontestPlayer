@@ -27,7 +27,9 @@
             android:id="@+id/playerSeekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:indeterminate="false" />
+
     </LinearLayout>
 
     <TextView
@@ -59,7 +61,16 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/durationTextView"
         android:layout_below="@+id/durationTextView"
+        android:layout_marginRight="16dp"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ProgressBar
+        android:id="@+id/bufferProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rel"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

@@ -80,8 +80,6 @@ public class AuditionsActivity extends BaseColorActivity implements OnPageChange
     super.onStart();
   }
   
-  
-  
   @Override
   protected void onStop() {
     // TODO Auto-generated method stub

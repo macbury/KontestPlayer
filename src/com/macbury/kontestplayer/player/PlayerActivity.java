@@ -13,12 +13,15 @@ import android.os.IBinder;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
@@ -36,13 +39,15 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   public final static int ACTION_BAR_COLOR    = 0xFF3F9FE0;
   public static final String AUDITION_EXTRA   = "AUDITION_EXTRA";
   private static final String TAG             = "PlayerActivity";
-  private Audition      currentAudition;
-  private Episode       currentEpisode;
-  private PlayerService playService;
-  private SeekBar       durationSeekBar;
-  private TextView      durationTextView;
-  private TextView      titleTextView;
-  private ImageButton   playPauseButton;
+  private Audition            currentAudition;
+  private Episode             currentEpisode;
+  private PlayerService       playService;
+  private SeekBar             durationSeekBar;
+  private TextView            durationTextView;
+  private TextView            titleTextView;
+  private ImageButton         playPauseButton;
+  private ShareActionProvider mShareActionProvider;
+  private ProgressBar         bufferingProgressBar;
   private boolean       mBound;
   private boolean       mSeekStart;
   
@@ -87,6 +92,7 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     durationTextView = (TextView)findViewById(R.id.durationTextView);
     titleTextView    = (TextView)findViewById(R.id.title);
     playPauseButton  = (ImageButton)findViewById(R.id.playPauseButton);
+    bufferingProgressBar = (ProgressBar)findViewById(R.id.bufferProgressBar);
     int c            = Color.parseColor(currentAudition.getColor());
     changeColor(c);
     changeColor(c);
@@ -95,12 +101,14 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     startPlayerService();
     
     durationSeekBar.setOnSeekBarChangeListener(this);
+    registerReceiver(mFinishServiceReciver, new IntentFilter(PlayerService.ACTION_FINISH_SERVICE));
   }
 
   @Override
   protected void onDestroy() {
     super.onStop();
     Log.d(TAG, "Stopping activity");
+    unregisterReceiver(mFinishServiceReciver);
     if (mBound) {
       unbindService(mConnection); 
     }
@@ -143,6 +151,19 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   }
 
   @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.player, menu);
+    mShareActionProvider  = (ShareActionProvider) menu.findItem(R.id.menu_share).getActionProvider();
+    Intent shareIntent    = new Intent(Intent.ACTION_SEND);
+    shareIntent.setType("text/plain");
+    shareIntent.putExtra(Intent.EXTRA_TEXT, currentEpisode.getLink());
+    shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, currentEpisode.getTitle());
+    
+    mShareActionProvider.setShareIntent(shareIntent);
+    return true;
+  }
+  
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case android.R.id.home:
@@ -171,17 +192,27 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   private void updateGUIFromService() {
     if (playService != null) {
       MediaPlayer mp = playService.getMediaPlayer();
-      durationSeekBar.setMax(mp.getDuration());
-      if (!mSeekStart) {
-        durationSeekBar.setProgress(mp.getCurrentPosition());
+      
+      if (playService.isPrepared()) {
+        durationSeekBar.setMax(mp.getDuration());
+        if (!mSeekStart) {
+          durationSeekBar.setProgress(mp.getCurrentPosition());
+        }
+        durationTextView.setText( Utils.formatDurationToString(mp.getCurrentPosition()/1000) + "/" + Utils.formatDurationToString(mp.getDuration() / 1000));
+        durationSeekBar.setEnabled(true);
+        bufferingProgressBar.setIndeterminate(false);
+        bufferingProgressBar.setMax(100);
+        bufferingProgressBar.setProgress(playService.getBufferProgress());
+      } else {
+        durationSeekBar.setEnabled(false);
+        bufferingProgressBar.setIndeterminate(true);
       }
-      durationTextView.setText( Utils.formatDurationToString(mp.getCurrentPosition()/1000) + "/" + Utils.formatDurationToString(mp.getDuration() / 1000));
+      
       if(mp.isPlaying()) {
         playPauseButton.setImageResource(R.drawable.av_pause);
       } else {
         playPauseButton.setImageResource(R.drawable.av_play);
       }
-      durationSeekBar.setEnabled(true);
     } else {
       durationSeekBar.setEnabled(false);
       playPauseButton.setImageResource(R.drawable.av_play);
@@ -190,14 +221,20 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   }
   
   private BroadcastReceiver mUpdateReciver = new BroadcastReceiver() {
-
     @Override
     public void onReceive(Context context, Intent intent) {
       updateGUIFromService();
     }
-    
   };
   
+  private BroadcastReceiver mFinishServiceReciver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+      if(mBound) {
+        unbindService(mConnection);
+      }
+    }
+  };
 
   @Override
   public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
