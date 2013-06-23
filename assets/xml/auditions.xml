@@ -35,7 +35,7 @@ tu naprawdę nie ma o czym mówić.
 
 Prowadzi audycję pod zaskakującą nazwą AgenTomasz</description>
     </audition>
-    <audition color="#FFF4842D" id="42" title="Firma na emigracji" feedUrl="http://www.kontestacja.com/program42.xml" imageUrl="http://www.kontestacja.com/images/programs/240/42.jpg">
+    <audition color="#8A2BE2" id="42" title="Firma na emigracji" feedUrl="http://www.kontestacja.com/program42.xml" imageUrl="http://www.kontestacja.com/images/programs/240/42.jpg">
         <summary>o tym dlaczego warto emigrować i jak żyje się polakom za granicą.</summary>
         <description>Maciej Bienert - Dumny ojciec i szczęśliwy mąż, a poza tym pedagog z 11. letnim stażem. Zajmuje się zwykle wieloma rzeczami na raz. Od 3 lat mieszka w Niemczech w raz z rodziną. 
 
@@ -44,7 +44,7 @@ Kiedyś urzędnik. Od 11 lat przedsiębiorca wolnorynkowiec, prowadzący działa
 W wieku 31 lat zrozumiał, że w życiu nie chodzi o to żeby siebie "odnaleźć" tylko siebie tworzyć. Po ukończeniu wielu szkół, kursów i uczelni, podjął się kolejnego wyzwania: prowadzenia audycji w Kontestacji. </description>
     </audition>
     
-    <audition color="#FFF4842D" id="44" title="Bejsment Toks" feedUrl="http://www.kontestacja.com/program44.xml" imageUrl="http://www.kontestacja.com/images/programs/240/44.jpg">
+    <audition color="#D2691E" id="44" title="Bejsment Toks" feedUrl="http://www.kontestacja.com/program44.xml" imageUrl="http://www.kontestacja.com/images/programs/240/44.jpg">
         <summary>jest przedłużeniem filmów zamieszczanych na kanale http://www.youtube.com/bejsmentoks
 </summary>
         <description>Gotham City ma swojego Batmana, Smallvile ma Supermana, a Polska ma Jacka W. Zamaskowanego superbohatera bez peleryny, ale z walecznym sercem, który walczy o wolność w tym najbardziej zajebistym kraju na świecie. 
@@ -56,7 +56,7 @@ Film Bejsment Toks w każdy czwartek.
 Audycja Bejsment Toks PLUS w każdy poniedziałek. </description>
     </audition>
     
-    <audition color="#FFF4842D" id="4" title="Świat Kamila C." feedUrl="http://www.kontestacja.com/program4.xml" imageUrl="http://www.kontestacja.com/images/programs/240/4.jpg">
+    <audition color="#8B4513" id="4" title="Świat Kamila C." feedUrl="http://www.kontestacja.com/program4.xml" imageUrl="http://www.kontestacja.com/images/programs/240/4.jpg">
         <summary>w którym przeprowadza wywiady z biznesmenami. We wtorki o 21.00</summary>
         <description>Człowiek, który swoją przygodę z biznesem rozpoczął w wieku 17 lat, kiedy to założył swoją pierwszą firmę. W wieku 18 lat zatrudnił pierwszego pracownika, a rok później miał ich dziesięciu. W wieku 21 lat wydał książki w których opisał swoją drogę do sukcesu, które stały się bestsellerami. Prasa zaczęła nazywać go najmłodszym milionerem w Polsce. 
 
@@ -64,5 +64,69 @@ W wieku 23 lat założył fundację promującą przedsiębiorczość, a kilka la
 
 Prowadzi audycję na żywo Świat Kamila C. w którym przeprowadza wywiady z biznesmenami. We wtorki o 21.00</description>
     </audition>
+    
+    <audition color="#4169E1" id="46" title="RadioStrefa Biznesu" feedUrl="http://www.kontestacja.com/program46.xml" imageUrl="http://www.kontestacja.com/images/programs/240/46.jpg">
+        <summary>poświęcony jest kwestiom prowadzenia działalności gospodarczej w Polsce, czyli wszystkim odważnie powiązanym z małymi i średnimi przedsiębiorstwami.
+
+  Nasza audycja dotyka jednak przede wszystkim ludzi, którzy w dzisiejszych czasach nie mają łatwo – kreatywnych i obdarowanych najpiękniejszą cechą jaką można posiadać człowiek, darem przedsiębiorczości.
+</summary>
+        <description>Olaf Wojak - patriota ceniący prawdę, uczciwość i pracowitość.
+Wszechstronny organizator, działacz społeczny, miłośnik natury i zwierząt. Z zamiłowania fotograf i grafik. 
+
+Doświadczony przedsiębiorca z wieloletnim stażem w branży elektronicznej i komputerowej.
+Specjalista ds. negocjacji i handlu zagranicznego. 
+
+Swoją przygodę z branżą IT zaczął od komputerów 8-bitowych. Za pośrednictwem Maloka BBS był 40-tym cywilnym użytkownikiem polskiego Internetu, w czasie kiedy nikt o nim nie słyszał. W latach 90-tych wdrażał program „internet dla szkół”. 
+
+Program RadioStrefy Biznesu poświęcony jest kwestiom prowadzenia działalności gospodarczej w Polsce, czyli wszystkim odważnie powiązanym z małymi i średnimi przedsiębiorstwami. 
+
+
+ 
+Nasza audycja dotyka jednak przede wszystkim ludzi, którzy w dzisiejszych czasach nie mają łatwo – kreatywnych i obdarowanych najpiękniejszą cechą jaką można posiadać człowiek, darem przedsiębiorczości. </description>
+    </audition>
+
+    <audition color="#1E90FF" id="36" title="Opowieści pastora-przedsiębiorcy" feedUrl="http://www.kontestacja.com/program36.xml" imageUrl="http://www.kontestacja.com/images/programs/240/36.jpg">
+        <summary>gdzie stara się przybliżyć biblijną perspektywę przedsiębiorczości. </summary>
+        <description>Andrzej Burzyński - były ksiądz, obecny pastor kościoła zielonoświątkowego i założyciel Instytutu Rozwoju Osobistego KOAH. Licencjonowany trener MS TEAM. Autor książek "Przebacz i uwolnij siebie" i "Życie pełne pasji". 
+
+Prywatnie szczęśliwy mąż i ojciec. Jest autorem szkoleń na temat zrozumienia siebie i innych, które stworzył w oparciu o wieloletnie doświadczenie pracy z ludźmi. Na indywidualnych spotkaniach pomaga odkryć swoją osobowość i żyć zgodnie z nią. Uczy, jak działać zgodnie ze swoją osobowością, wykorzystując zarówno swoje silne, jak i słabe strony, by tworzyć zdrowe relacje, osiągać zamierzone cele i dobrze się przy tym bawić. Poza tym inwestuje w nieruchomości. 
+
+Prowadzi audycję Opowieści pastora przedsiębiorcy gdzie stara się przybliżyć biblijną perspektywę przedsiębiorczości. </description> </audition>
+
+    <audition color="#696969" id="16" title="Konserwa" feedUrl="http://www.kontestacja.com/program16.xml" imageUrl="http://www.kontestacja.com/images/programs/240/16.jpg">
+        <summary>Każdy jest konserwatystą, tylko jeszcze o tym nie wie. Na żywo we wtorki o 22:22</summary>
+        <description>Adam Kreator - konserwatywny liberał pracujący niestety na etacie. W wolnym czasie zajmuje się pomnażaniem w socjalizmie XXI wieku swojej nędzy i różnymi dziwnymi zainteresowaniami: numizmatyka, fuchy, grafika 3D, rysunki, rzeźba, malarstwo, design, stare komputery, pisanie artykułów, podróże, fotografia zabytków, konserwacja sztuki, zamki polskie, monarchiści, historia ogólnie a zwłaszcza mało znane ciekawostki które wyszukuję w książkach, internecie i wikipedii. Żeby określić dokładniej trzeba wypić z nim lampkę wina o cenie powyżej 8zł za butelkę. 
+
+Krzysztof Jabollissimus - wierszoklej (słowo "poeta" używał niejeden grafoman, on skromnie nie użyje). Węglomaz i farbiarz ("rysownik i malarz" zarezerwowane są raczej dla tych, co nieszpetnie uprawiają sztukę). Wydrzymord (zaiste, by być "wokalistą" trzeba umieć śpiewać!). By poznać fragmenty jego tfu-rczości - warto zajrzeć na stronę www.jabollissimus.pl Żeby poznać go lepiej, trzeba wypić z nim lampkę wina w cenie poniżej 8zł za butelkę. 
+
+Prowadzą audycję na żywo Konserwa Każdy jest konserwatystą, tylko jeszcze o tym nie wie. Na żywo we wtorki o 22:22 </description> </audition>
+
+    <audition color="#778899" id="45" title="InvesTime" feedUrl="http://www.kontestacja.com/program45.xml" imageUrl="http://www.kontestacja.com/images/programs/240/45.jpg">
+        <summary>o tym, jak skutecznie inwestować i dlaczego właśnie teraz. Swoim subiektywnym okiem oceniają określone branże i tematy inwestycyjne</summary>
+        <description>Mariusz Matrejek - Inwestor na rynku nieruchomości z 9 letnim doświadczeniem, certyfikowany kierownik projektów, właściciel Aquarius Property Investments. Absolwent Politechniki Wrocławskiej, pośrednik na rynku nieruchomości. 
+
+Daniel Piesto – Jego pracą jest poszukiwanie inwestorów, absolwent prawa na KUL'u, współrealizuje projekt stworzenia instytucji finansowej, pasjonuje się nieruchomościami i wiecznie poszukuje sparing-partnerów do tenisa, ma bardzo intrygującą przeszłość. 
+
+Prowadzą audycję Investime o tym, jak skutecznie inwestować i dlaczego właśnie teraz. Swoim subiektywnym okiem oceniają określone branże i tematy inwestycyjne.
+http://InvesTime.kontestacja.com</description> </audition>
+
+    <audition color="#696969" id="16" title="Konserwa" feedUrl="http://www.kontestacja.com/program16.xml" imageUrl="http://www.kontestacja.com/images/programs/240/16.jpg">
+        <summary>Każdy jest konserwatystą, tylko jeszcze o tym nie wie. Na żywo we wtorki o 22:22</summary>
+        <description>Adam Kreator - konserwatywny liberał pracujący niestety na etacie. W wolnym czasie zajmuje się pomnażaniem w socjalizmie XXI wieku swojej nędzy i różnymi dziwnymi zainteresowaniami: numizmatyka, fuchy, grafika 3D, rysunki, rzeźba, malarstwo, design, stare komputery, pisanie artykułów, podróże, fotografia zabytków, konserwacja sztuki, zamki polskie, monarchiści, historia ogólnie a zwłaszcza mało znane ciekawostki które wyszukuję w książkach, internecie i wikipedii. Żeby określić dokładniej trzeba wypić z nim lampkę wina o cenie powyżej 8zł za butelkę. 
+
+Krzysztof Jabollissimus - wierszoklej (słowo "poeta" używał niejeden grafoman, on skromnie nie użyje). Węglomaz i farbiarz ("rysownik i malarz" zarezerwowane są raczej dla tych, co nieszpetnie uprawiają sztukę). Wydrzymord (zaiste, by być "wokalistą" trzeba umieć śpiewać!). By poznać fragmenty jego tfu-rczości - warto zajrzeć na stronę www.jabollissimus.pl Żeby poznać go lepiej, trzeba wypić z nim lampkę wina w cenie poniżej 8zł za butelkę. 
+
+Prowadzą audycję na żywo Konserwa Każdy jest konserwatystą, tylko jeszcze o tym nie wie. Na żywo we wtorki o 22:22 </description> </audition>
+
+    <audition color="#6B8E23" id="39" title="Jasna Strona Mocy" feedUrl="http://www.kontestacja.com/program39.xml" imageUrl="http://www.kontestacja.com/images/programs/240/39.jpg">
+        <summary>audycję rzucającą światło na pozytywne strony życia, mimo jego negatywnych okoliczności.</summary>
+        <description>Krzysiek Burzyński posiada doświadczenie w branży zoologicznej, które pomaga zrozumieć mu... ludzi, a na co dzień rzuca okiem na biznes żony i tłumaczy 6-letniemu synowi jak zarabiać pieniądze i zmieniać na zabawki (projekt milionzapalek.pl). Autor e-booka Kiyosaki ukryty w kasztanach. 
+
+Ania Burzyńska — z zamiłowania pstrykacz zdjęć, z zawodu grafik. Żona, matka, właścicielka firmy FOTOGRAFISTICA. Wywołać i utrwalić wartość człowieka, to jej życiowa, nie tylko fotograficzna misja. 
+
+Remigiusz Matuszkiewicz z wykształcenia jest plastykiem. Zawodowo zajmuje się projektowaniem graficznym i wykonywaniem reklam oraz dekoracji ściennych. Jego pasją jest malarstwo, które wyraża poprzez różne formy artystyczne. Swoją aktywność twórczą przejawia również w tworzeniu tekstów, śpiewając oraz występując w przedstawieniach kabaretowych i amatorskich filmach. Zdjęcia jego prac artystycznych można zobaczyć na www.fb.com/art.remo. 
+
+Prowadzą audycję Jasna Strona Mocy audycję rzucającą światło na pozytywne strony życia, mimo jego negatywnych okoliczności.
+http://JasnaStronaMocy.kontestacja.com</description> </audition>
   </auditions>
 </kontestacja>

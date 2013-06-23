@@ -107,7 +107,7 @@ public class FeedSynchronizer extends Service {
       Log.i(TAG, "Next to sync: "+ currentAudition.getTitle() + " " + currentAudition.getFeedUrl());
       
       AjaxCallback<XmlDom> cb = new AjaxCallback<XmlDom>();
-      cb.url(currentAudition.getFeedUrl()).type(XmlDom.class).timeout(10).handler(this, "onFeedFetchComplete");  
+      cb.url(currentAudition.getFeedUrl()).type(XmlDom.class).handler(this, "onFeedFetchComplete");  
       
       query.ajax(cb);
     } else {
