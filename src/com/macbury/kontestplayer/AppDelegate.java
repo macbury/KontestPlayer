@@ -1,6 +1,7 @@
 package com.macbury.kontestplayer;
 
 import com.macbury.kontestplayer.auditions.AuditionManager;
+import com.macbury.kontestplayer.db.DatabaseHelper;
 import com.macbury.kontestplayer.services.FeedSynchronizer;
 
 import android.app.AlarmManager;
@@ -16,6 +17,7 @@ public class AppDelegate extends Application {
   private static final String TAG = "AppDelegate";
   private static AppDelegate _shared;
   private AuditionManager auditionManager;
+  private DatabaseHelper databaseHelper;
   
   public void addRefreshTimer() {
     Log.i(TAG, "Adding refresh timer");
@@ -41,11 +43,17 @@ public class AppDelegate extends Application {
     sync();
   }
   
+  public DatabaseHelper getDBHelper() {
+    if (databaseHelper == null) {
+      databaseHelper = new DatabaseHelper(this);
+    }
+    return databaseHelper;
+  }
+  
   public AuditionManager getAuditionManager() {
     if (auditionManager == null) {
       auditionManager = AuditionManager.build(getResources());
     }
-    
     return auditionManager;
   }
 
@@ -53,6 +61,7 @@ public class AppDelegate extends Application {
   public void onLowMemory() {
     Log.i(TAG, "Freeing memory");
     auditionManager = null;
+    databaseHelper  = null;
     super.onLowMemory();
   }
 

@@ -1,6 +1,7 @@
 package com.macbury.kontestplayer.services;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.R;
@@ -79,29 +80,36 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
     PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     builder.setContentIntent(pi);
     
-    if (mediaPlayer.isPlaying()) {
-      intent = new Intent(this, PlayerService.class);
-      intent.putExtra(EXTRA_EPISODE, currentEpisode.getId());
-      intent.putExtra(EXTRA_AUDITION, currentAudition.getId());
-      intent.putExtra(EXTRA_ACTION, EXTRA_ACTION_PAUSE);
-      pi = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      
-      builder.addAction(R.drawable.av_pause_dark, "Pauza", pi);    
+    if (isPrepared) {
+      if (mediaPlayer.isPlaying()) {
+        intent = new Intent(this, PlayerService.class);
+        intent.putExtra(EXTRA_EPISODE, currentEpisode.getId());
+        intent.putExtra(EXTRA_AUDITION, currentAudition.getId());
+        intent.putExtra(EXTRA_ACTION, EXTRA_ACTION_PAUSE);
+        pi = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+        builder.addAction(R.drawable.av_pause_dark, "Pauza", pi);    
+      } else {
+        intent = new Intent(this, PlayerService.class);
+        intent.putExtra(EXTRA_EPISODE, currentEpisode.getId());
+        intent.putExtra(EXTRA_AUDITION, currentAudition.getId());
+        intent.putExtra(EXTRA_ACTION, EXTRA_ACTION_PLAY);
+        
+        pi = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        
+        builder.addAction(R.drawable.av_play_dark, "Odtwarzaj", pi);
+      }
     } else {
-      intent = new Intent(this, PlayerService.class);
-      intent.putExtra(EXTRA_EPISODE, currentEpisode.getId());
-      intent.putExtra(EXTRA_AUDITION, currentAudition.getId());
-      intent.putExtra(EXTRA_ACTION, EXTRA_ACTION_PLAY);
-      
-      pi = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      
-      builder.addAction(R.drawable.av_play_dark, "Odtwarzaj", pi);
+      builder.setProgress(0, 100, true);
     }
     
     startForeground(NOTIFICATION_ID, builder.build());
   }
   
   private void createMediaPlayer() {
+    if (mediaPlayer != null) {
+      mediaPlayer.release();
+    }
     mediaPlayer = new MediaPlayer();
     mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
     mediaPlayer.setOnPreparedListener(this);
@@ -181,34 +189,38 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
     Audition au     = AppDelegate.shared().getAuditionManager().findById(intent.getExtras().getInt(EXTRA_AUDITION));
-    Episode ep      = au.findEpisode(intent.getExtras().getInt(EXTRA_EPISODE));
+    Episode ep      = null;
+    try {
+      ep = au.findEpisode(intent.getExtras().getInt(EXTRA_EPISODE));
+    } catch (SQLException e1) {
+      throw new RuntimeException(e1);
+    }
 
-    if (ep != currentEpisode) {
-      if (mediaPlayer != null) {
-        mediaPlayer.release();
-      }
+    if (currentEpisode == null || ep.getId() != currentEpisode.getId()) { 
       createMediaPlayer();
       currentEpisode  = ep;
       currentAudition = au;
+      Log.d(TAG, "Will play new song: "+ currentEpisode.getId());
       Log.d(TAG, "Preparing: " + currentEpisode.getMp3Url());
       try {
         mediaPlayer.setDataSource(currentEpisode.getMp3Url());
       } catch (IllegalArgumentException e) {
         e.printStackTrace();
-        stopSelf();
+        finish();
       } catch (SecurityException e) {
         e.printStackTrace();
-        stopSelf();
+        finish();
       } catch (IllegalStateException e) {
         e.printStackTrace();
-        stopSelf();
+        finish();
       } catch (IOException e) {
         e.printStackTrace();
-        stopSelf();
+        finish();
       }
       
       mediaPlayer.prepareAsync();
     } else if (isPrepared) {
+      Log.d(TAG, "Recived action intent for the same track "+ currentEpisode.getId() + " - " + intent.getExtras().getString(EXTRA_ACTION));
       if (intent.getExtras().getString(EXTRA_ACTION).equals(EXTRA_ACTION_PLAY)) {
         mediaPlayer.start();
       } else {

@@ -100,39 +100,40 @@ containing a value of this type.
         public static final int underlineHeight=0x7f010004;
     }
     public static final class color {
-        public static final int actionbar_gray=0x7f040017;
-        public static final int aqua=0x7f04000d;
+        public static final int actionbar_gray=0x7f040018;
+        public static final int aqua=0x7f04000e;
         public static final int background_tab_pressed=0x7f040000;
         public static final int background_window=0x7f040002;
         public static final int background_window_with_list=0x7f040001;
-        public static final int black=0x7f040013;
-        public static final int blue=0x7f040011;
-        public static final int bright_blue=0x7f040014;
-        public static final int dark_blue=0x7f040015;
-        public static final int download_failed_red=0x7f040019;
-        public static final int download_success_green=0x7f040018;
-        public static final int fuchsia=0x7f040006;
-        public static final int gray=0x7f040009;
-        public static final int green=0x7f040010;
-        public static final int ics_gray=0x7f040016;
-        public static final int lime=0x7f04000e;
+        public static final int black=0x7f040014;
+        public static final int blue=0x7f040012;
+        public static final int bright_blue=0x7f040015;
+        public static final int dark_blue=0x7f040016;
+        public static final int download_failed_red=0x7f04001a;
+        public static final int download_success_green=0x7f040019;
+        public static final int fuchsia=0x7f040007;
+        public static final int gray=0x7f04000a;
+        public static final int green=0x7f040011;
+        public static final int ics_gray=0x7f040017;
+        public static final int latest_episode_view_item_background=0x7f040004;
+        public static final int lime=0x7f04000f;
         public static final int list_view_text_color=0x7f040003;
-        public static final int maroon=0x7f04000c;
-        public static final int navy=0x7f040012;
-        public static final int olive=0x7f04000a;
-        public static final int overlay_dark=0x7f04001d;
-        public static final int overlay_light=0x7f04001e;
-        public static final int purple=0x7f04000b;
-        public static final int red=0x7f040007;
-        public static final int selection_background_color_dark=0x7f04001f;
-        public static final int selection_background_color_light=0x7f040020;
-        public static final int silver=0x7f040008;
-        public static final int status_playing=0x7f04001c;
-        public static final int status_progress=0x7f04001b;
-        public static final int status_unread=0x7f04001a;
-        public static final int teal=0x7f04000f;
-        public static final int white=0x7f040004;
-        public static final int yellow=0x7f040005;
+        public static final int maroon=0x7f04000d;
+        public static final int navy=0x7f040013;
+        public static final int olive=0x7f04000b;
+        public static final int overlay_dark=0x7f04001e;
+        public static final int overlay_light=0x7f04001f;
+        public static final int purple=0x7f04000c;
+        public static final int red=0x7f040008;
+        public static final int selection_background_color_dark=0x7f040020;
+        public static final int selection_background_color_light=0x7f040021;
+        public static final int silver=0x7f040009;
+        public static final int status_playing=0x7f04001d;
+        public static final int status_progress=0x7f04001c;
+        public static final int status_unread=0x7f04001b;
+        public static final int teal=0x7f040010;
+        public static final int white=0x7f040005;
+        public static final int yellow=0x7f040006;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -158,26 +159,28 @@ containing a value of this type.
     public static final class drawable {
         public static final int actionbar_bottom=0x7f020000;
         public static final int activated_background_indicator=0x7f020001;
-        public static final int av_pause=0x7f020002;
-        public static final int av_pause_dark=0x7f020003;
-        public static final int av_play=0x7f020004;
-        public static final int av_play_dark=0x7f020005;
-        public static final int background_tab=0x7f020006;
-        public static final int background_tabs=0x7f020007;
-        public static final int fab__gradient=0x7f020008;
-        public static final int fab__gradient_light=0x7f020009;
-        public static final int hugo=0x7f02000a;
-        public static final int ic_launcher=0x7f02000b;
-        public static final int ic_launcher_actionbar=0x7f02000c;
-        public static final int ny_light=0x7f02000d;
-        public static final int tabs_pattern=0x7f02000e;
-        public static final int white_circle=0x7f02000f;
+        public static final int av_download_dark=0x7f020002;
+        public static final int av_pause=0x7f020003;
+        public static final int av_pause_dark=0x7f020004;
+        public static final int av_play=0x7f020005;
+        public static final int av_play_dark=0x7f020006;
+        public static final int background_tab=0x7f020007;
+        public static final int background_tabs=0x7f020008;
+        public static final int fab__gradient=0x7f020009;
+        public static final int fab__gradient_light=0x7f02000a;
+        public static final int hugo=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int ic_launcher_actionbar=0x7f02000d;
+        public static final int ny_light=0x7f02000e;
+        public static final int tabs_pattern=0x7f02000f;
+        public static final int white_circle=0x7f020010;
     }
     public static final class id {
         public static final int aboutWebView=0x7f090000;
         public static final int bufferProgressBar=0x7f09000a;
         public static final int description=0x7f09000d;
         public static final int details=0x7f09000f;
+        public static final int download=0x7f090019;
         public static final int durationTextView=0x7f090008;
         public static final int episodesListView=0x7f090003;
         public static final int fab__container=0x7f090015;
@@ -211,6 +214,7 @@ containing a value of this type.
         public static final int fab__header_container=0x7f030007;
         public static final int fab__listview_container=0x7f030008;
         public static final int fab__scrollview_container=0x7f030009;
+        public static final int latest_episode_view_item=0x7f03000a;
     }
     public static final class menu {
         public static final int auditions=0x7f080000;

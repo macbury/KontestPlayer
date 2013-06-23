@@ -7,6 +7,7 @@ import com.androidquery.callback.ImageOptions;
 import com.macbury.kontestplayer.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,7 @@ public class AuditionsArrayAdapter extends BaseAdapter {
     Audition audition = getItem(position);
     AQuery aq         = query.recycle(convertView);
     
+    holder.name.setTextColor(audition.getAsColor());
     aq.id(R.id.title).text(audition.getTitle());
     aq.id(R.id.description).text(audition.getSummary());
     //Log.i(TAG, "Setting url:"+audition.getImageUrl());

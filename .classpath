@@ -6,5 +6,15 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/jsoup-1.7.2.jar"/>
+	<classpathentry kind="lib" path="libs/ormlite-core-4.45.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://ormlite.com/javadoc/ormlite-core/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/ormlite-android-4.45.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://ormlite.com/javadoc/ormlite-android/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

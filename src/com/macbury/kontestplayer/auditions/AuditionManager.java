@@ -75,11 +75,11 @@ public class AuditionManager {
   }
   
   public static AuditionManager build(Resources resources) {
-    AuditionManager manager = loadExternalCache(resources);
+    /*AuditionManager manager = loadExternalCache(resources);
     if (manager == null) {
       manager = loadInternalCache(resources);
-    }
-    return manager;
+    }*/
+    return loadInternalCache(resources);
   }
   
   public static AuditionManager loadInternalCache(Resources resources) {
@@ -137,30 +137,9 @@ public class AuditionManager {
     return AuditionManager.auditionsStoragePath() + "auditions.xml";
   }
   
-  public boolean save() {
-    Serializer serializer = new Persister();
-    createStorageDirectory();
-    Log.i(TAG, "Saving auditions in "+auditionsFilePath());
-    try {
-      serializer.write(this, new File(auditionsFilePath()));
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
   
   public void freeMemory() {
     this.auditions = null;
   }
   
-  public ArrayList<Episode> getLatestEpisodes() {
-    ArrayList<Episode> episodes = new ArrayList<Episode>();
-    
-    for (Audition audition : getAuditions()) {
-      episodes.add(audition.getLatestEpisode());
-    }
-    Collections.sort(episodes);
-    return episodes;
-  }
 }

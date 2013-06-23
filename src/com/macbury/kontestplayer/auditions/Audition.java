@@ -1,5 +1,6 @@
 package com.macbury.kontestplayer.auditions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,6 +8,10 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+
+import android.graphics.Color;
+
+import com.macbury.kontestplayer.AppDelegate;
 
 @Root(name="audition")
 public class Audition {
@@ -76,41 +81,24 @@ public class Audition {
     return color;
   }
   
+  public int getAsColor() {
+    int c = Color.parseColor(color);
+    return c;
+  }
+  
   public void setColor(String color) {
     this.color = color;
   }
   
   public ArrayList<Episode> getEpisodes() {
-    if (episodes == null) {
-      episodes = new ArrayList<Episode>();
+    try {
+      return AppDelegate.shared().getDBHelper().getOrderedEpisodesForAudition(this);
+    } catch (SQLException e) {
+      return null;
     }
-    return episodes;
-  }
-  
-  public void addEpisode(Episode episode) {
-    if (episodes == null) {
-      episodes = new ArrayList<Episode>();
-    }
-    //Collections.sort(episodes);
-    episodes.add(episode);
-  }
-  
-  public void clearEpisodes() {
-    if (episodes != null) {
-      episodes.clear();
-    }
-  }
-  
-  public Episode getLatestEpisode() {
-    return episodes.get(0);
   }
 
-  public Episode findEpisode(int id) {
-    for (Episode ep : episodes) {
-      if (ep.getId() == id) {
-        return ep;
-      }
-    }
-    return null;
+  public Episode findEpisode(int id) throws SQLException {
+    return AppDelegate.shared().getDBHelper().getEpisodeDao().queryForId(id);
   }
 }

@@ -1,5 +1,6 @@
 package com.macbury.kontestplayer.services;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import com.androidquery.util.XmlDom;
 import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.Episode;
+import com.macbury.kontestplayer.db.DatabaseHelper;
 import com.macbury.kontestplayer.utils.DateParser;
 
 import android.R;
@@ -28,7 +30,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class FeedSynchronizer extends Service {
-  //Thu, 13 Jun 2013 09:55:21 +0000
   public static final SimpleDateFormat rfc822DateFormats[] = new SimpleDateFormat[] { new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm:ss z"), new SimpleDateFormat("d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yyyy HH:mm:ss z"), }; 
   private static final String TAG = "FeedSynchronizer";
   private Stack<Audition> auditions;
@@ -38,6 +39,7 @@ public class FeedSynchronizer extends Service {
   public static final String BROADCAST_ACTION_FINISHED_SYNCING = "com.macbury.kontestplayer.BROADCAST_ACTION_FINISHED_SYNCING";
   
   private WifiManager.WifiLock wifilock;
+  private DatabaseHelper dbHelper;
   static final String WIFILOCK = "OPTION_PERM_WIFILOCK";
   
   public void acquireWifiLock(Context ctx) {
@@ -74,6 +76,7 @@ public class FeedSynchronizer extends Service {
     auditions = new Stack<Audition>();
     auditions.addAll(AppDelegate.shared().getAuditionManager().getAuditions());
     acquireWifiLock(this);
+    this.dbHelper = AppDelegate.shared().getDBHelper();
     super.onCreate();
   }
 
@@ -103,13 +106,10 @@ public class FeedSynchronizer extends Service {
       query.ajax(currentAudition.getFeedUrl(), XmlDom.class, this, "onFeedFetchComplete");
     } else {
       Log.i(TAG, "Finished syncing");
-      AppDelegate.shared().getAuditionManager().save();
       auditions       = null;
       currentAudition = null;
       
-      Intent intent = new Intent();
-      intent.setAction(BROADCAST_ACTION_FINISHED_SYNCING);
-      sendBroadcast(intent);
+      sendBroadcast(new Intent(BROADCAST_ACTION_FINISHED_SYNCING));
       stopSelf();
     }
   }
@@ -124,21 +124,33 @@ public class FeedSynchronizer extends Service {
   
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
     if (content != null) {
-      List<XmlDom> entries = content.tags("item"); 
-      currentAudition.clearEpisodes();
+      List<XmlDom> entries = content.tags("item");
       for (XmlDom entry : entries) {
-        Episode episode = new Episode();
+        String  gid     = entry.tag("guid").text();
+        Episode episode = null;
+        try {
+          episode = dbHelper.getEpisodeByGid(gid);
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        }
+        
+        if (episode == null) {
+          episode = new Episode();
+        }
+        
+        episode.setAuditionId(currentAudition.getId());
+        episode.setGid(gid);
         episode.setTitle(entry.tag("title").text());
         episode.setLink(entry.tag("link").text());
         episode.setDescription(entry.tag("description").text());
         Date pubDate = DateParser.parseDate(entry.tag("pubDate").text());
         episode.setPubDate(pubDate);
-        episode.setId(Integer.parseInt(entry.tag("guid").text()));
         
         XmlDom enclosure = entry.tag("enclosure");
         if (enclosure != null) {
+          episode.setDuration(Integer.parseInt(enclosure.attr("length")));
           episode.setMp3Url(enclosure.attr("url"));
-          currentAudition.addEpisode(episode);
+          dbHelper.saveEpisode(episode);
         }
       }
     } else {

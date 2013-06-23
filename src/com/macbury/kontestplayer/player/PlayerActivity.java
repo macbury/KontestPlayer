@@ -1,5 +1,7 @@
 package com.macbury.kontestplayer.player;
 
+import java.sql.SQLException;
+
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -81,8 +83,14 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     Intent intent = getIntent();
     
     currentAudition = AppDelegate.shared().getAuditionManager().findById(intent.getExtras().getInt(AUDITION_EXTRA));
-    currentEpisode  = currentAudition.findEpisode(intent.getExtras().getInt(EPISODE_ID_EXTRA));
+    try {
+      currentEpisode  = currentAudition.findEpisode(intent.getExtras().getInt(EPISODE_ID_EXTRA));
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
     setTitle(currentAudition.getTitle());
+    
+    currentEpisode.markAsPlayed();
     
     AQuery query    = new AQuery(this);
     query.id(R.id.title).text(currentEpisode.getTitle());

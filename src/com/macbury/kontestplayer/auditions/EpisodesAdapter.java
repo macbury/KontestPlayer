@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.androidquery.AQuery;
 import com.macbury.kontestplayer.R;
+import com.macbury.kontestplayer.utils.Utils;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -18,6 +19,7 @@ public class EpisodesAdapter extends BaseAdapter {
   private ArrayList<Episode> episodes;
   private Context context;
   private AQuery query;
+  private boolean includeAuditionName = false;
   
   public EpisodesAdapter(Context context, ArrayList<Episode> episodes) {
     this.context = context;
@@ -61,7 +63,15 @@ public class EpisodesAdapter extends BaseAdapter {
     
     aq.id(R.id.title).text(episode.getTitle());
     aq.id(R.id.description).text(episode.getDescription());
-    aq.id(R.id.details).text(DateFormat.format("dd, MMMM yyyy ", episode.getPubDate()));
+    String details = (String) DateFormat.format("dd, MMMM yyyy ", episode.getPubDate());
+    
+    holder.name.setTextColor(episode.getAudition().getAsColor());
+    
+    if (includeAuditionName) {
+      details = episode.getAudition().getTitle() + " - "+details;
+    }
+    
+    aq.id(R.id.details).text(details);
     return convertView;
   }
 
@@ -75,6 +85,14 @@ public class EpisodesAdapter extends BaseAdapter {
       Collections.sort(episodes);
     }
     notifyDataSetChanged();
+  }
+
+  public boolean isIncludeAuditionName() {
+    return includeAuditionName;
+  }
+
+  public void setIncludeAuditionName(boolean includeAuditionName) {
+    this.includeAuditionName = includeAuditionName;
   }
 
 }

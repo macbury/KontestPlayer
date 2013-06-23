@@ -53,9 +53,7 @@ public class EpisodesActivity extends BaseColorActivity implements OnItemClickLi
     }
     
     episodeArrayAdapter = new EpisodesAdapter(this, currentAudition.getEpisodes());
-    if (currentAudition.getEpisodes().size() > 0) {
-      listView.setAdapter(episodeArrayAdapter);
-    }
+    listView.setAdapter(episodeArrayAdapter);
     listView.setOnItemClickListener(this);
   }
   
@@ -95,15 +93,10 @@ public class EpisodesActivity extends BaseColorActivity implements OnItemClickLi
     @Override
     public void onReceive(Context context, Intent intent) {
       Log.i(TAG, "Updating episodes!");
-      if (listView.getAdapter() == null) {
-        listView.setAdapter(episodeArrayAdapter);
-      } else {
-        episodeArrayAdapter.setEpisodes(currentAudition.getEpisodes());
-      }
+      episodeArrayAdapter.setEpisodes(currentAudition.getEpisodes());
     }
     
   };
-
 
   @Override
   public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {

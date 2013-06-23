@@ -5,20 +5,30 @@ import java.util.Date;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name="episode")
+import com.j256.ormlite.field.DatabaseField;
+import com.macbury.kontestplayer.AppDelegate;
+
 public class Episode implements Comparable<Episode> {
-  @Element
-  private String title;
-  @Element
-  private String link;
-  @Element(required=false)
-  private String description;
-  @Element
-  private String mp3Url;
-  @Element
-  private Date   pubDate;
-  @Element
+  @DatabaseField
+  private int     auditionId;
+  @DatabaseField
+  private String  title;
+  @DatabaseField
+  private String  link;
+  @DatabaseField
+  private String  description;
+  @DatabaseField
+  private String  mp3Url;
+  @DatabaseField
+  private Date    pubDate;
+  @DatabaseField
+  private int     duration;
+  @DatabaseField
+  private boolean played;
+  @DatabaseField(generatedId = true)
   private int    id;
+  @DatabaseField(unique = true)
+  private String gid;
   
   public String getTitle() {
     return title;
@@ -59,5 +69,33 @@ public class Episode implements Comparable<Episode> {
   @Override
   public int compareTo(Episode another) {
     return another.getPubDate().compareTo(this.getPubDate());
+  }
+  public void setGid(String gid2) {
+    this.gid = gid2;
+  }
+  public int getAuditionId() {
+    return auditionId;
+  }
+  public void setAuditionId(int auditionId) {
+    this.auditionId = auditionId;
+  }
+  public void markAsPlayed() {
+    this.played = true;
+    AppDelegate.shared().getDBHelper().saveEpisode(this);
+  }
+  public int getDuration() {
+    return duration;
+  }
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
+  public Audition getAudition() {
+    for (Audition a : AppDelegate.shared().getAuditionManager().getAuditions()) {
+      if (a.getId() == getAuditionId()) {
+        return a;
+      }
+    }
+    
+    return null;
   }
 }
