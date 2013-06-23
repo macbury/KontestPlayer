@@ -55,5 +55,14 @@ Zapraszam najpierw do oglądania, a potem do słuchania:
 Film Bejsment Toks w każdy czwartek.
 Audycja Bejsment Toks PLUS w każdy poniedziałek. </description>
     </audition>
+    
+    <audition color="#FFF4842D" id="4" title="Świat Kamila C." feedUrl="http://www.kontestacja.com/program4.xml" imageUrl="http://www.kontestacja.com/images/programs/240/4.jpg">
+        <summary>w którym przeprowadza wywiady z biznesmenami. We wtorki o 21.00</summary>
+        <description>Człowiek, który swoją przygodę z biznesem rozpoczął w wieku 17 lat, kiedy to założył swoją pierwszą firmę. W wieku 18 lat zatrudnił pierwszego pracownika, a rok później miał ich dziesięciu. W wieku 21 lat wydał książki w których opisał swoją drogę do sukcesu, które stały się bestsellerami. Prasa zaczęła nazywać go najmłodszym milionerem w Polsce. 
+
+W wieku 23 lat założył fundację promującą przedsiębiorczość, a kilka lat później szkołę biznesu ASBIRO, w której wykładają wyłącznie przedsiębiorcy. 
+
+Prowadzi audycję na żywo Świat Kamila C. w którym przeprowadza wywiady z biznesmenami. We wtorki o 21.00</description>
+    </audition>
   </auditions>
 </kontestacja>

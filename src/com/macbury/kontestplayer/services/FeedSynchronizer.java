@@ -21,6 +21,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NavUtils;
@@ -123,41 +124,11 @@ public class FeedSynchronizer extends Service {
   
   
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
-    if (content != null) {
-      List<XmlDom> entries = content.tags("item");
-      for (XmlDom entry : entries) {
-        String  gid     = entry.tag("guid").text();
-        Episode episode = null;
-        try {
-          episode = dbHelper.getEpisodeByGid(gid);
-        } catch (SQLException e) {
-          throw new RuntimeException(e);
-        }
-        
-        if (episode == null) {
-          episode = new Episode();
-        }
-        
-        episode.setAuditionId(currentAudition.getId());
-        episode.setGid(gid);
-        episode.setTitle(entry.tag("title").text());
-        episode.setLink(entry.tag("link").text());
-        episode.setDescription(entry.tag("description").text());
-        Date pubDate = DateParser.parseDate(entry.tag("pubDate").text());
-        episode.setPubDate(pubDate);
-        
-        XmlDom enclosure = entry.tag("enclosure");
-        if (enclosure != null) {
-          episode.setDuration(Integer.parseInt(enclosure.attr("length")));
-          episode.setMp3Url(enclosure.attr("url"));
-          dbHelper.saveEpisode(episode);
-        }
-      }
+    if (content == null) {
+      Log.i(TAG, "Invalid response: "+status.getCode());
     } else {
-      Log.i(TAG, "Invalid response: " + status.getCode());
+      new DownloadFilesTask().execute(content);
     }
-    
-    sync();
   }
   
   private void updateNotification(String contentText, int progress) {
@@ -173,5 +144,53 @@ public class FeedSynchronizer extends Service {
     }
     
     startForeground(SYNC_SERVICE_ID, builder.build());
+  }
+  
+  private class DownloadFilesTask extends AsyncTask<XmlDom, Integer, Long> {
+    @Override
+    protected Long doInBackground(XmlDom... xml) {
+      XmlDom content = xml[0];
+      
+      if (content != null) {
+        List<XmlDom> entries = content.tags("item");
+        for (XmlDom entry : entries) {
+          String  gid     = entry.tag("guid").text();
+          Episode episode = null;
+          try {
+            episode = dbHelper.getEpisodeByGid(gid);
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+          
+          if (episode == null) {
+            episode = new Episode();
+          }
+          
+          episode.setAuditionId(currentAudition.getId());
+          episode.setGid(gid);
+          episode.setTitle(entry.tag("title").text());
+          episode.setLink(entry.tag("link").text());
+          episode.setDescription(entry.tag("description").text());
+          Date pubDate = DateParser.parseDate(entry.tag("pubDate").text());
+          episode.setPubDate(pubDate);
+          
+          XmlDom enclosure = entry.tag("enclosure");
+          if (enclosure != null) {
+            episode.setDuration(Integer.parseInt(enclosure.attr("length")));
+            episode.setMp3Url(enclosure.attr("url"));
+            dbHelper.saveEpisode(episode);
+          }
+        }
+      } else {
+        Log.i(TAG, "Invalid response:");
+      }
+      
+      return (long) 1;
+    }
+    
+    @Override
+    protected void onPostExecute(Long result) {
+      FeedSynchronizer.this.sync();
+    }
   }
 }

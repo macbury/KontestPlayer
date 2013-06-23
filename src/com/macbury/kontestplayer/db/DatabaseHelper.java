@@ -19,7 +19,7 @@ import com.macbury.kontestplayer.auditions.Episode;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   private static final String DATABASE_NAME   = "kontestacja.db";
-  private static final int DATABASE_VERSION   = 7;
+  private static final int DATABASE_VERSION   = 8;
   private static final String TAG             = DatabaseHelper.class.getName();
   private Dao<Episode, Integer> episodeDao    = null;
   
