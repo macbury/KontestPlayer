@@ -70,8 +70,8 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
       .setSmallIcon(com.macbury.kontestplayer.R.drawable.av_play_dark)
       .setContentTitle(currentAudition.getTitle());
-    builder.setContentText(currentEpisode.getTitle());
-    builder.setSubText(Utils.formatDurationToString(mediaPlayer.getCurrentPosition() / 1000));
+    builder.setContentText(Utils.formatDurationToString(mediaPlayer.getCurrentPosition() / 1000));
+    builder.setSubText(currentEpisode.getTitle());
     
     Intent intent = new Intent(this, PlayerActivity.class);
     intent.putExtra(PlayerActivity.EPISODE_ID_EXTRA, currentEpisode.getId());
