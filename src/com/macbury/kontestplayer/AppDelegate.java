@@ -30,7 +30,6 @@ public class AppDelegate extends Application {
     int type         = AlarmManager.ELAPSED_REALTIME_WAKEUP;
     long interval    = AlarmManager.INTERVAL_HOUR;
     long triggerTime = SystemClock.elapsedRealtime();
-     
     am.setInexactRepeating( type, triggerTime, interval, pi );
   }
   
