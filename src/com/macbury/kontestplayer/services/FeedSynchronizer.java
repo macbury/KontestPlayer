@@ -19,7 +19,6 @@ import com.macbury.kontestplayer.db.DatabaseHelper;
 import com.macbury.kontestplayer.player.PlayerActivity;
 import com.macbury.kontestplayer.utils.DateParser;
 
-import android.R;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -27,13 +26,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.MenuItem;
 
 public class FeedSynchronizer extends Service {
   private static final String TAG                              = "FeedSynchronizer";
@@ -46,6 +41,7 @@ public class FeedSynchronizer extends Service {
   private static final String EXTRA_ACTION                     = "EXTRA_ACTION";
   private static final String EXTRA_ACTION_CANCEL              = "EXTRA_ACTION_CANCEL";
   
+  private int auditionsCount = 0;
   private Stack<Audition> auditions;
   private ArrayList<Episode> newEpisodes;
   private AQuery query;
@@ -139,7 +135,7 @@ public class FeedSynchronizer extends Service {
       return;
     } else if (auditions.size() > 0) {
       currentAudition = auditions.pop();
-      updateNotification(currentAudition.getTitle(), 0);
+      updateNotification(currentAudition.getTitle(), (auditionsCount - auditions.size()) * 100 / auditionsCount);
       Log.i(TAG, "Next to sync: "+ currentAudition.getTitle() + " " + currentAudition.getFeedUrl());
       
       AjaxCallback<XmlDom> cb = new AjaxCallback<XmlDom>();
@@ -257,6 +253,7 @@ public class FeedSynchronizer extends Service {
     
     @Override
     protected void onPostExecute(Long result) {
+      FeedSynchronizer.this.auditionsCount = FeedSynchronizer.this.auditions.size();  
       FeedSynchronizer.this.syncEpisodes();
     }
   }

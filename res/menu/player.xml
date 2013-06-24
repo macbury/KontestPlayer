@@ -4,9 +4,5 @@
           android:title="@string/share"
           android:showAsAction="always"
           android:actionProviderClass="android.widget.ShareActionProvider" />
-    <item         android:id="@+id/download" 
-        android:showAsAction="never"
-        android:icon="@drawable/av_download_dark"
-         />
 
 </menu>

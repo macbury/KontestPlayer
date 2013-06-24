@@ -1,4 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/refresh" android:title="@string/refresh"></item>
+    <!-- <item android:id="@+id/stream" android:title="@string/listen_now" android:icon="@drawable/action_stream_dark" android:showAsAction="always" android:visible="true"></item> -->
 
 </menu>

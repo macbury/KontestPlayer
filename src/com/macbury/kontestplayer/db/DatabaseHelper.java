@@ -13,7 +13,6 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.Episode;
 
@@ -115,7 +114,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   public ArrayList<Episode> getLatestEpisodes() throws SQLException {
     QueryBuilder<Episode, Integer> qb = getEpisodeDao().queryBuilder();
     qb.orderBy("pubDate", false);
-    qb.limit((long)10);
+    qb.limit((long)15);
     PreparedQuery<Episode> pq = qb.prepare();
     return new ArrayList<Episode>(getEpisodeDao().query(pq));
   }

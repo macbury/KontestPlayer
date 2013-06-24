@@ -47,6 +47,7 @@
               android:name="android.support.PARENT_ACTIVITY"
               android:value=".AuditionsActivity" /></activity>
         <service android:name="com.macbury.kontestplayer.services.PlayerService"></service>
+        <activity android:name=".player.RadioFragment"></activity>
     </application>
 
 </manifest>

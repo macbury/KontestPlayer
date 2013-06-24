@@ -50,8 +50,8 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
   private ImageButton         playPauseButton;
   private ShareActionProvider mShareActionProvider;
   private ProgressBar         bufferingProgressBar;
-  private boolean       mBound;
-  private boolean       mSeekStart;
+  private boolean             mBound;
+  private boolean             mSeekStart;
   
   private ServiceConnection mConnection = new ServiceConnection() {
     @Override

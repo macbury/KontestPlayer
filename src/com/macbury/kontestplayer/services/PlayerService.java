@@ -109,6 +109,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
   public void createMediaPlayer() {
     if (mediaPlayer != null) {
       mediaPlayer.release();
+      mediaPlayer = null;
     }
     mediaPlayer = new MediaPlayer();
     mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
@@ -117,6 +118,7 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
     mediaPlayer.setOnBufferingUpdateListener(this);
     mediaPlayer.setOnSeekCompleteListener(this);
     mediaPlayer.setOnErrorListener(this);
+    isPrepared = false;
   }
 
   @Override

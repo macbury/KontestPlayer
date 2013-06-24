@@ -7,5 +7,6 @@
     <string name="auditions_activity_tab_auditions_list">Audycje</string>
     <string name="refresh">Odśwież</string>
     <string name="share">Udostępnij</string>
+    <string name="listen_now">Słuchaj radia</string>
 
 </resources>

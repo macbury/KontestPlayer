@@ -6,9 +6,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 
 import com.macbury.kontestplayer.about.AboutPageFragment;
 import com.macbury.kontestplayer.episodes.LastEpisodesFragment;
+import com.macbury.kontestplayer.player.RadioFragment;
 import com.macbury.kontestplayer.utils.PageTabInterface;
 
 public class MainSectionPagerAdapter extends FragmentPagerAdapter {
@@ -56,5 +58,8 @@ public class MainSectionPagerAdapter extends FragmentPagerAdapter {
   public int getCount() {
     return 3;
   }
-
+  
+  public void onPlayPauseButtonClick(View sender) {
+    
+  }
 }
