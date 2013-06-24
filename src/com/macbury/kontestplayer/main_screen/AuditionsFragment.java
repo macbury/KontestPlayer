@@ -28,7 +28,7 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
     super.onActivityCreated(savedInstanceState);
     AuditionManager manager = AppDelegate.shared().getAuditionManager();
     auditionsArrayAdapter   = new AuditionsArrayAdapter(this.getActivity().getApplicationContext(), manager.getAuditions());
-    setListAdapter(auditionsArrayAdapter);
+    //setListAdapter(auditionsArrayAdapter);
   }
 
   protected void reloadAuditions() {

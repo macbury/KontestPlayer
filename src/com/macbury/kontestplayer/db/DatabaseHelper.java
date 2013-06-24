@@ -19,10 +19,10 @@ import com.macbury.kontestplayer.auditions.Episode;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   private static final String DATABASE_NAME   = "kontestacja.db";
-  private static final int DATABASE_VERSION   = 8;
+  private static final int DATABASE_VERSION   = 9;
   private static final String TAG             = DatabaseHelper.class.getName();
   private Dao<Episode, Integer> episodeDao    = null;
-  
+  private Dao<Audition, Integer> auditionDao  = null;
   public DatabaseHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
@@ -32,6 +32,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     try {
       Log.i(TAG, "onCreate");
       TableUtils.createTable(connectionSource, Episode.class);
+      TableUtils.createTable(connectionSource, Audition.class);
     } catch (SQLException e) {
       Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
       throw new RuntimeException(e);
@@ -43,6 +44,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     try {
       Log.i(DatabaseHelper.class.getName(), "onUpgrade");
       TableUtils.dropTable(connectionSource, Episode.class, true);
+      TableUtils.dropTable(connectionSource, Audition.class, true);
       // after we drop the old databases, we create the new ones
       onCreate(db, connectionSource);
     } catch (SQLException e) {
@@ -56,6 +58,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
       episodeDao = getDao(Episode.class);
     }
     return episodeDao;
+  }
+  
+  public Dao<Audition, Integer> getAuditionDao() throws SQLException {
+    if (auditionDao == null) {
+      auditionDao = getDao(Audition.class);
+    }
+    return auditionDao;
   }
   
   public Episode getEpisodeByGid(String gid) throws SQLException {
@@ -90,7 +99,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   public ArrayList<Episode> getLatestEpisodes() throws SQLException {
     QueryBuilder<Episode, Integer> qb = getEpisodeDao().queryBuilder();
     qb.orderBy("pubDate", false);
-    qb.limit(AppDelegate.shared().getAuditionManager().getAuditions().size());
+    //qb.limit(15);
     PreparedQuery<Episode> pq = qb.prepare();
     return new ArrayList<Episode>(getEpisodeDao().query(pq));
   }

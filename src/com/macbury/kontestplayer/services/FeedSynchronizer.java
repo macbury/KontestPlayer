@@ -89,7 +89,6 @@ public class FeedSynchronizer extends Service {
     newEpisodes = new ArrayList<Episode>();
     query       = new AQuery(this);
     auditions   = new Stack<Audition>();
-    auditions.addAll(AppDelegate.shared().getAuditionManager().getAuditions());
     acquireWifiLock(this);
     this.dbHelper = AppDelegate.shared().getDBHelper();
     super.onCreate();
@@ -104,14 +103,11 @@ public class FeedSynchronizer extends Service {
   public int onStartCommand(Intent intent, int flags, int startId) {
     if (intent != null && EXTRA_ACTION_CANCEL.equals(intent.getStringExtra(EXTRA_ACTION))) {
       Log.i(TAG, "Stoping sync!");
-      query.ajaxCancel();
-      currentParserTask.cancel(true);
-      cancelRecived  = true;
-      stopSelf();
+      finish();
     } else if (currentAudition == null) {
       Log.i(TAG, "Starting syncing!");
       updateNotification("Synchronizacja...", 0);
-      sync();
+      syncAuditions();
     } else {
       Log.i(TAG, "Already syncing!");
     }
@@ -119,9 +115,26 @@ public class FeedSynchronizer extends Service {
     return super.onStartCommand(intent, flags, startId);
   }
   
-  private void sync() {
+  private void finish() {
+    query.ajaxCancel();
+    currentParserTask.cancel(true);
+    cancelRecived  = true;
+    stopSelf();
+  }
+
+  private void syncAuditions() {
+    Log.i(TAG, "Syncing url from: "+AUDITIONS_URL);
+    AjaxCallback<XmlDom> cb = new AjaxCallback<XmlDom>();
+    cb.url(AUDITIONS_URL).type(XmlDom.class).handler(this, "onInfoFetchComplete");  
+    
+    query.ajax(cb);
+  }
+
+  private void syncEpisodes() {
     currentParserTask = null;
-    if (auditions.size() > 0) {
+    if (cancelRecived) {
+      return;
+    } else if (auditions.size() > 0) {
       currentAudition = auditions.pop();
       updateNotification(currentAudition.getTitle(), 0);
       Log.i(TAG, "Next to sync: "+ currentAudition.getTitle() + " " + currentAudition.getFeedUrl());
@@ -171,12 +184,21 @@ public class FeedSynchronizer extends Service {
     releaseWifilock();
   }
   
+  public void onInfoFetchComplete(String url, XmlDom content, AjaxStatus status){
+    if (content == null) {
+      Log.i(TAG, "Invalid response: "+status.getCode() + " for " + url);
+      finish();
+    } else {
+      currentParserTask = new DownloadAuditionsTask().execute(content);
+    }
+  }
+  
   public void onFeedFetchComplete(String url, XmlDom content, AjaxStatus status){
     if (content == null) {
       Log.i(TAG, "Invalid response: "+status.getCode());
-      sync();
+      syncEpisodes();
     } else {
-      currentParserTask = new DownloadFilesTask().execute(content);
+      currentParserTask = new DownloadEpisodesTask().execute(content);
     }
   }
   
@@ -200,7 +222,25 @@ public class FeedSynchronizer extends Service {
     startForeground(SYNC_SERVICE_ID, builder.build());
   }
   
-  private class DownloadFilesTask extends AsyncTask<XmlDom, Integer, Long> {
+  private class DownloadAuditionsTask extends AsyncTask<XmlDom, Integer, Long> {
+    @Override
+    protected Long doInBackground(XmlDom... xml) {
+      XmlDom content = xml[0];
+      
+      if (content != null) {
+        //Audition audition = new Audition();
+        //auditions.add(audition);
+      }
+      return (long)0;
+    }
+    
+    @Override
+    protected void onPostExecute(Long result) {
+      FeedSynchronizer.this.syncEpisodes();
+    }
+  }
+  
+  private class DownloadEpisodesTask extends AsyncTask<XmlDom, Integer, Long> {
     @Override
     protected Long doInBackground(XmlDom... xml) {
       XmlDom content = xml[0];
@@ -213,10 +253,6 @@ public class FeedSynchronizer extends Service {
           boolean newRecord = false;
           String  gid     = entry.tag("guid").text();
           Episode episode = null;
-          
-          if (cancelRecived) {
-            break;
-          }
           
           try {
             episode = dbHelper.getEpisodeByGid(gid);
@@ -256,7 +292,7 @@ public class FeedSynchronizer extends Service {
     
     @Override
     protected void onPostExecute(Long result) {
-      FeedSynchronizer.this.sync();
+      FeedSynchronizer.this.syncEpisodes();
     }
   }
 }

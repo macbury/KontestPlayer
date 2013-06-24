@@ -11,27 +11,24 @@ import org.simpleframework.xml.Root;
 
 import android.graphics.Color;
 
+import com.j256.ormlite.field.DatabaseField;
 import com.macbury.kontestplayer.AppDelegate;
 
-@Root(name="audition")
 public class Audition {
-  @Attribute
+  @DatabaseField(unique=true)
   private int id;
-  @Attribute
+  @DatabaseField
   private String color;
-  @Attribute
+  @DatabaseField
   private String title;
-  @Attribute
+  @DatabaseField
   private String feedUrl;
-  @Attribute
+  @DatabaseField
   private String imageUrl;
-  @Element
+  @DatabaseField
   private String description;
-  @Element
+  @DatabaseField
   private String summary;
-  
-  @ElementList(name="episodes", required=false)
-  private ArrayList<Episode> episodes;
   
   public String getSummary() {
     return summary;

@@ -51,7 +51,7 @@ public class AppDelegate extends Application {
   
   public AuditionManager getAuditionManager() {
     if (auditionManager == null) {
-      auditionManager = AuditionManager.build(getResources());
+      auditionManager = new AuditionManager();
     }
     return auditionManager;
   }
