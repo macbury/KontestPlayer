@@ -28,7 +28,7 @@ public class AppDelegate extends Application {
     Intent intent    = new Intent(this, FeedSynchronizer.class);
     PendingIntent pi = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     int type         = AlarmManager.ELAPSED_REALTIME_WAKEUP;
-    long interval    = AlarmManager.INTERVAL_DAY;
+    long interval    = AlarmManager.INTERVAL_HOUR;
     long triggerTime = SystemClock.elapsedRealtime();
     am.setInexactRepeating( type, triggerTime, interval, pi );
   }

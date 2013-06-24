@@ -36,22 +36,25 @@ import android.util.Log;
 import android.view.MenuItem;
 
 public class FeedSynchronizer extends Service {
-  public static final SimpleDateFormat rfc822DateFormats[] = new SimpleDateFormat[] { new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yy HH:mm z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z"), new SimpleDateFormat("EEE, d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm z"), new SimpleDateFormat("d MMM yy HH:mm:ss z"), new SimpleDateFormat("d MMM yyyy HH:mm z"), new SimpleDateFormat("d MMM yyyy HH:mm:ss z"), }; 
-  private static final String TAG = "FeedSynchronizer";
+  private static final String TAG                              = "FeedSynchronizer";
+  private static final String AUDITIONS_URL                    = "http://www.kontestacja.com/info.xml";
+  private static final int SYNC_SERVICE_ID                     = 345;
+  public static final String BROADCAST_ACTION_FINISHED_SYNCING = "com.macbury.kontestplayer.BROADCAST_ACTION_FINISHED_SYNCING";
+  
+  private boolean cancelRecived                                = false;
+  static final String WIFILOCK                                 = "OPTION_PERM_WIFILOCK";
+  private static final String EXTRA_ACTION                     = "EXTRA_ACTION";
+  private static final String EXTRA_ACTION_CANCEL              = "EXTRA_ACTION_CANCEL";
+  
   private Stack<Audition> auditions;
   private ArrayList<Episode> newEpisodes;
   private AQuery query;
   private Audition currentAudition;
-  private static final int SYNC_SERVICE_ID                      = 345;
-  public static final String BROADCAST_ACTION_FINISHED_SYNCING = "com.macbury.kontestplayer.BROADCAST_ACTION_FINISHED_SYNCING";
-  
+ 
   private WifiManager.WifiLock wifilock;
   private DatabaseHelper dbHelper;
   private AsyncTask<XmlDom, Integer, Long> currentParserTask;
-  private boolean cancelRecived = false;
-  static final String WIFILOCK = "OPTION_PERM_WIFILOCK";
-  private static final String EXTRA_ACTION = "EXTRA_ACTION";
-  private static final String EXTRA_ACTION_CANCEL = "EXTRA_ACTION_CANCEL";
+  
   
   public void acquireWifiLock(Context ctx) {
     WifiManager wifiManager = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
