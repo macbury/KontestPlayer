@@ -82,7 +82,12 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     
     Intent intent = getIntent();
     
-    currentAudition = AppDelegate.shared().getAuditionManager().findById(intent.getExtras().getInt(AUDITION_EXTRA));
+    try {
+      currentAudition = AppDelegate.shared().getDBHelper().getAuditionDao().queryForId(intent.getIntExtra(AUDITION_EXTRA, 0));
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    
     try {
       currentEpisode  = currentAudition.findEpisode(intent.getExtras().getInt(EPISODE_ID_EXTRA));
     } catch (SQLException e) {
@@ -101,10 +106,10 @@ public class PlayerActivity extends BaseColorActivity implements OnSeekBarChange
     titleTextView    = (TextView)findViewById(R.id.title);
     playPauseButton  = (ImageButton)findViewById(R.id.playPauseButton);
     bufferingProgressBar = (ProgressBar)findViewById(R.id.bufferProgressBar);
-    int c            = Color.parseColor(currentAudition.getColor());
-    changeColor(c);
-    changeColor(c);
-    titleTextView.setTextColor(c);
+    //int c            = Color.parseColor(currentAudition.getColor());
+    changeColor(ACTION_BAR_COLOR);
+    changeColor(ACTION_BAR_COLOR);
+    titleTextView.setTextColor(ACTION_BAR_COLOR);
     durationTextView.setText("...");
     startPlayerService();
     

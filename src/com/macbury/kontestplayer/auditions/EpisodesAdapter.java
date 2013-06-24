@@ -65,7 +65,7 @@ public class EpisodesAdapter extends BaseAdapter {
     aq.id(R.id.description).text(episode.getDescription());
     String details = (String) DateFormat.format("dd, MMMM yyyy ", episode.getPubDate());
     
-    holder.name.setTextColor(episode.getAudition().getAsColor());
+    //holder.name.setTextColor(episode.getAudition().getAsColor());
     
     if (includeAuditionName) {
       details = episode.getAudition().getTitle() + " - "+details;

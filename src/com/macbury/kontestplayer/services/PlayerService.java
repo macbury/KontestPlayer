@@ -188,7 +188,13 @@ public class PlayerService extends Service implements OnPreparedListener, OnBuff
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    Audition au     = AppDelegate.shared().getAuditionManager().findById(intent.getExtras().getInt(EXTRA_AUDITION));
+    Audition au     = null;
+    try {
+      au            = AppDelegate.shared().getDBHelper().getAuditionDao().queryForId(intent.getExtras().getInt(EXTRA_AUDITION));
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    
     Episode ep      = null;
     try {
       ep = au.findEpisode(intent.getExtras().getInt(EXTRA_EPISODE));

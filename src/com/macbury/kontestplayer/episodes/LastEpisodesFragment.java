@@ -52,13 +52,14 @@ public class LastEpisodesFragment extends ListFragment implements PageTabInterfa
     }
     
     if (episodes.size() > 0) {
-      try {
-        episodeArrayAdapter = new EpisodesAdapter(this.getActivity(), AppDelegate.shared().getDBHelper().getLatestEpisodes());
+      if (getListAdapter() == null) {
+        episodeArrayAdapter = new EpisodesAdapter(this.getActivity(), episodes);
         episodeArrayAdapter.setIncludeAuditionName(true);
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
+        
+        setListAdapter(episodeArrayAdapter);
+      } else {
+        episodeArrayAdapter.setEpisodes(episodes);
       }
-      setListAdapter(episodeArrayAdapter);
     }
   }
 

@@ -1,5 +1,7 @@
 package com.macbury.kontestplayer.episodes;
 
+import java.sql.SQLException;
+
 import com.androidquery.AQuery;
 import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.R;
@@ -31,8 +33,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 public class EpisodesActivity extends BaseColorActivity implements OnItemClickListener{
-  private static final String TAG = "EpisodesActivity";
+  private static final String TAG           = "EpisodesActivity";
   public static final String EXTRA_AUDITION = "EXTRA_AUDITION";
+  public final static int ACTION_BAR_COLOR  = 0xFF3F9FE0;
   private AQuery query;
   private EpisodesAdapter episodeArrayAdapter;
   private Audition currentAudition;
@@ -70,11 +73,16 @@ public class EpisodesActivity extends BaseColorActivity implements OnItemClickLi
   }
 
   private void loadAuditionFromBundle(Bundle savedInstanceState) {
-    currentAudition = AppDelegate.shared().getAuditionManager().findById(savedInstanceState.getInt(EXTRA_AUDITION));
+    
+    try {
+      currentAudition = AppDelegate.shared().getDBHelper().getAuditionDao().queryForId(savedInstanceState.getInt(EXTRA_AUDITION));
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
     setTitle(currentAudition.getTitle());
-    int c = Color.parseColor(currentAudition.getColor());
-    changeColor(c);
-    changeColor(c);
+    //int c = Color.parseColor(currentAudition.getColor());
+    changeColor(ACTION_BAR_COLOR);
+    changeColor(ACTION_BAR_COLOR);
     //query.id(R.id.image_header).image(audition.getImageUrl());
   }
 

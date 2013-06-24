@@ -1,5 +1,6 @@
 package com.macbury.kontestplayer.auditions;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.simpleframework.xml.Element;
@@ -90,12 +91,11 @@ public class Episode implements Comparable<Episode> {
     this.duration = duration;
   }
   public Audition getAudition() {
-    for (Audition a : AppDelegate.shared().getAuditionManager().getAuditions()) {
-      if (a.getId() == getAuditionId()) {
-        return a;
-      }
+    try {
+      return AppDelegate.shared().getDBHelper().getAuditionDao().queryForId(getAuditionId());
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    
     return null;
   }
 }

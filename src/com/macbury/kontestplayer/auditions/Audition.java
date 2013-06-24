@@ -15,28 +15,12 @@ import com.j256.ormlite.field.DatabaseField;
 import com.macbury.kontestplayer.AppDelegate;
 
 public class Audition {
-  @DatabaseField(unique=true)
+  @DatabaseField(unique=true, id=true)
   private int id;
-  @DatabaseField
-  private String color;
   @DatabaseField
   private String title;
   @DatabaseField
-  private String feedUrl;
-  @DatabaseField
-  private String imageUrl;
-  @DatabaseField
   private String description;
-  @DatabaseField
-  private String summary;
-  
-  public String getSummary() {
-    return summary;
-  }
-  
-  public void setSummary(String summary) {
-    this.summary = summary;
-  }
   
   public String getTitle() {
     return title;
@@ -47,11 +31,7 @@ public class Audition {
   }
   
   public String getFeedUrl() {
-    return feedUrl;
-  }
-  
-  public void setFeedUrl(String feedUrl) {
-    this.feedUrl = feedUrl;
+    return "http://www.kontestacja.com/program"+getId()+".xml";
   }
   
   public String getDescription() {
@@ -63,28 +43,11 @@ public class Audition {
   }
   
   public String getImageUrl() {
-    return imageUrl;
+    return "http://www.kontestacja.com/images/programs/240/"+getId()+".jpg";
   }
-  
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-  }
-  
+
   public int getId() {
     return id;
-  }
-  
-  public String getColor() {
-    return color;
-  }
-  
-  public int getAsColor() {
-    int c = Color.parseColor(color);
-    return c;
-  }
-  
-  public void setColor(String color) {
-    this.color = color;
   }
   
   public ArrayList<Episode> getEpisodes() {
@@ -97,5 +60,9 @@ public class Audition {
 
   public Episode findEpisode(int id) throws SQLException {
     return AppDelegate.shared().getDBHelper().getEpisodeDao().queryForId(id);
+  }
+
+  public void setId(int id2) {
+    this.id = id2;
   }
 }

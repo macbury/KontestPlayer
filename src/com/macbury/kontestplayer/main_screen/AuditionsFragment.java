@@ -1,5 +1,8 @@
 package com.macbury.kontestplayer.main_screen;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.macbury.kontestplayer.AppDelegate;
 import com.macbury.kontestplayer.auditions.Audition;
 import com.macbury.kontestplayer.auditions.AuditionManager;
@@ -16,6 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class AuditionsFragment extends ListFragment implements PageTabInterface {
@@ -26,15 +30,28 @@ public class AuditionsFragment extends ListFragment implements PageTabInterface 
   @Override
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    AuditionManager manager = AppDelegate.shared().getAuditionManager();
-    auditionsArrayAdapter   = new AuditionsArrayAdapter(this.getActivity().getApplicationContext(), manager.getAuditions());
-    //setListAdapter(auditionsArrayAdapter);
+    reloadAuditions();
   }
 
   protected void reloadAuditions() {
     Log.i(TAG, "Reloading auditions.");
-    AuditionManager manager = AppDelegate.shared().getAuditionManager();
-    auditionsArrayAdapter.setAuditions(manager.getAuditions());
+    ArrayList<Audition> auditions = null;
+    try {
+      auditions = AppDelegate.shared().getDBHelper().getOrderedAuditions();
+    } catch (SQLException e) {
+      
+    }
+    
+    if (auditions == null || auditions.size() == 0) {
+      
+    } else {
+      if (getListAdapter() == null) {
+        auditionsArrayAdapter   = new AuditionsArrayAdapter(this.getActivity(), auditions);
+        setListAdapter(auditionsArrayAdapter);
+      } else {
+        auditionsArrayAdapter.setAuditions(auditions);
+      }
+    }
   }
 
   @Override

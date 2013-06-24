@@ -69,9 +69,9 @@ public class AuditionsArrayAdapter extends BaseAdapter {
     Audition audition = getItem(position);
     AQuery aq         = query.recycle(convertView);
     
-    holder.name.setTextColor(audition.getAsColor());
+    //holder.name.setTextColor(audition.getAsColor());
     aq.id(R.id.title).text(audition.getTitle());
-    aq.id(R.id.description).text(audition.getSummary());
+    aq.id(R.id.description).text(audition.getDescription());
     //Log.i(TAG, "Setting url:"+audition.getImageUrl());
     aq.id(holder.imageview).image(audition.getImageUrl(), true, true, 0, 0, null, 0, 1.0f);
     return convertView;

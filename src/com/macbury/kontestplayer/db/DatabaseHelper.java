@@ -19,8 +19,8 @@ import com.macbury.kontestplayer.auditions.Episode;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   private static final String DATABASE_NAME   = "kontestacja.db";
-  private static final int DATABASE_VERSION   = 9;
-  private static final String TAG             = DatabaseHelper.class.getName();
+  private static final int DATABASE_VERSION   = 17;
+  private static final String TAG             = "DatabaseHelper";
   private Dao<Episode, Integer> episodeDao    = null;
   private Dao<Audition, Integer> auditionDao  = null;
   public DatabaseHelper(Context context) {
@@ -74,6 +74,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     return getEpisodeDao().queryForFirst(pq);
   }
   
+  public void saveAudition(Audition audition) {
+    Log.d(TAG, "Saving audition");
+    try {
+      getAuditionDao().createOrUpdate(audition);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+  
   public void saveEpisode(Episode episode) {
     Log.d(TAG, "Saving episode");
     try {
@@ -88,6 +97,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     super.close();
   }
 
+  public ArrayList<Audition> getOrderedAuditions() throws SQLException {
+    QueryBuilder<Audition, Integer> qb = getAuditionDao().queryBuilder();
+    qb.orderBy("title", true);
+    PreparedQuery<Audition> pq = qb.prepare();
+    return new ArrayList<Audition>(getAuditionDao().query(pq));
+  }
+  
   public ArrayList<Episode> getOrderedEpisodesForAudition(Audition audition) throws SQLException {
     QueryBuilder<Episode, Integer> qb = getEpisodeDao().queryBuilder(); 
     qb.where().eq("auditionId", audition.getId()); 
@@ -99,7 +115,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
   public ArrayList<Episode> getLatestEpisodes() throws SQLException {
     QueryBuilder<Episode, Integer> qb = getEpisodeDao().queryBuilder();
     qb.orderBy("pubDate", false);
-    //qb.limit(15);
+    qb.limit((long)10);
     PreparedQuery<Episode> pq = qb.prepare();
     return new ArrayList<Episode>(getEpisodeDao().query(pq));
   }

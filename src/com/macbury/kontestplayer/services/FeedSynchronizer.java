@@ -86,11 +86,11 @@ public class FeedSynchronizer extends Service {
   @Override
   public void onCreate() {
     Log.i(TAG, "Creating service");
-    newEpisodes = new ArrayList<Episode>();
-    query       = new AQuery(this);
-    auditions   = new Stack<Audition>();
-    acquireWifiLock(this);
+    query         = new AQuery(this);
+    auditions     = new Stack<Audition>();
+    newEpisodes   = new ArrayList<Episode>();
     this.dbHelper = AppDelegate.shared().getDBHelper();
+    acquireWifiLock(this);
     super.onCreate();
   }
 
@@ -117,7 +117,10 @@ public class FeedSynchronizer extends Service {
   
   private void finish() {
     query.ajaxCancel();
-    currentParserTask.cancel(true);
+    if (currentParserTask != null) {
+      currentParserTask.cancel(true);
+    }
+    
     cancelRecived  = true;
     stopSelf();
   }
@@ -225,11 +228,29 @@ public class FeedSynchronizer extends Service {
   private class DownloadAuditionsTask extends AsyncTask<XmlDom, Integer, Long> {
     @Override
     protected Long doInBackground(XmlDom... xml) {
-      XmlDom content = xml[0];
+      XmlDom content    = xml[0];
       
       if (content != null) {
-        //Audition audition = new Audition();
-        //auditions.add(audition);
+        List<XmlDom> programs = content.tags("p");
+        
+        for (XmlDom entry : programs) {
+          int id            = Integer.parseInt(entry.attr("id"));
+          Log.d(TAG, "Syncing audition: "+ id);
+          Audition audition = null;
+          try {
+            audition        = dbHelper.getAuditionDao().queryForId(id);
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+          
+          audition = new Audition();
+          audition.setTitle(entry.tag("name").text());
+          audition.setDescription(entry.tag("description").text());
+          audition.setId(id);
+          
+          dbHelper.saveAudition(audition);
+          auditions.add(audition);
+        }
       }
       return (long)0;
     }
@@ -244,8 +265,6 @@ public class FeedSynchronizer extends Service {
     @Override
     protected Long doInBackground(XmlDom... xml) {
       XmlDom content = xml[0];
-      
-      boolean firstSynchronization = currentAudition.getEpisodes().size() == 0;
       
       if (content != null) {
         List<XmlDom> entries = content.tags("item");
@@ -278,7 +297,7 @@ public class FeedSynchronizer extends Service {
             episode.setDuration(Integer.parseInt(enclosure.attr("length")));
             episode.setMp3Url(enclosure.attr("url"));
             dbHelper.saveEpisode(episode);
-            if (newRecord && !firstSynchronization) {
+            if (newRecord) {
               FeedSynchronizer.this.newEpisodes.add(episode);
             }
           }
